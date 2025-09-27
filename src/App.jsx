@@ -3,15 +3,17 @@ import * as Icons from "lucide-react";
 import { motion } from "framer-motion";
 
 /**
- * Interactive Portfolio – Light Theme + Dark Sidebar + Projects Section
- * - Matches the previously-updated theme/layout
- * - Projects section (Analytics + Dashboards) before Work Experience
- * - Contact with Beacon St, Boston + Google Maps embed + fallback link
- * - Lucide icon namespace import with defensive DatabaseIcon fallback
- * - Dev tests to catch common data issues
+ * Rohan Verma – Stanley-style Interactive Portfolio
+ * - Dark sticky left sidebar with active nav highlight
+ * - Smooth scroll + scrollspy
+ * - Typewriter hero
+ * - Section cards with blue accents
+ * - Projects (Analytics & Dashboards), Research Publication
+ * - Contact (Beacon St, Boston) + mailto form
+ * - Vite-safe asset paths + icon fallbacks
  */
 
-// Pull icons via namespace so we can safely check availability
+// ---- Icons (with Database fallback) ----
 const DatabaseIcon = typeof Icons.Database === "function" ? Icons.Database : Icons.Code2;
 const {
   Mail,
@@ -33,24 +35,21 @@ const {
   BookOpen,
 } = Icons;
 
-// ------------------------------
-// Content (edit me!)
-// ------------------------------
+// ---- Profile & content ----
 const PROFILE = {
   name: "Rohan Verma",
   titleWords: ["Data Analyst", "Data Engineer", "Consultant"],
-  avatar: "/profile.jpg", // Vite-safe path; put your file in /public/profile.jpg
+  avatar: "/profile.jpg", // put your photo in /public/profile.jpg
   tagline:
-    "Professional and enthusiastic masters student with a strong blend of analytics and engineering.",
+    "Professional and enthusiastic master's student with a strong blend of analytics and engineering.",
   location: "Beacon St, Boston, MA, USA",
   email: "verma.rohan@northeastern.edu",
   socials: {
     github: "https://github.com/Rohan3122k",
-    linkedin: "http://www.linkedin.com/in/r3122k",
+    linkedin: "https://www.linkedin.com/in/r3122k",
   },
 };
 
-// Skills
 const SKILLS = [
   { name: "SQL", icon: DatabaseIcon },
   { name: "Python", icon: Code2 },
@@ -64,7 +63,7 @@ const SKILLS = [
 ];
 
 const CERTS = [
-  { name: "Microsoft PowerBI Data Analyst Associate (PL300)" },
+  { name: "Microsoft Power BI Data Analyst Associate (PL-300)" },
   { name: "IBM Data Science Certificate" },
   { name: "AWS Certified Cloud Practitioner (In Progress)" },
 ];
@@ -73,28 +72,27 @@ const SERVICES = [
   {
     title: "Project Scoping & Data Discovery",
     desc:
-      "Understand business requirements and translate them into technical solutions. Collaborate with stakeholders to define scope and success criteria.",
+      "Translate business requirements into technical solutions with clear scope and success criteria.",
   },
   {
     title: "Data Analysis & Reporting",
     desc:
-      "Advanced analytics with SQL + Python. Build reports and dashboards to drive data-informed decisions.",
+      "Advanced analytics with SQL + Python. Build reports and dashboards to drive decisions.",
   },
   {
     title: "Data Visualization",
     desc:
-      "Create interactive visualizations with Tableau/Power BI. Convert complex data into clear insights.",
+      "Interactive dashboards in Tableau/Power BI. Convert complex data into clear insights.",
   },
   {
     title: "ELT & ETL Pipelines",
     desc:
-      "Design robust pipelines with dbt, Airflow, and cloud warehouses. Ensure reliability and observability.",
+      "Design robust pipelines with dbt, Airflow, and cloud warehouses with observability in mind.",
   },
-  { title: "Automation", desc: "Automate repetitive tasks and workflows to reduce manual effort and improve consistency." },
-  { title: "Cloud Deployment", desc: "Deploy and manage data solutions in the cloud (AWS). Embrace IaC and modern DevOps practices." },
+  { title: "Automation", desc: "Automate workflows to save time and reduce errors." },
+  { title: "Cloud Deployment", desc: "Deploy and operate data solutions on AWS." },
 ];
 
-// Timeline
 const TIMELINE = {
   education: [
     {
@@ -102,7 +100,7 @@ const TIMELINE = {
       org: "Northeastern University",
       time: "2024 – 2026",
       details: [
-        "Relevant courses: Database Management, Data Mining & Visualization, Machine Learning, Economic Decision Making",
+        "Relevant courses: DB Management, Data Mining & Visualization, Machine Learning, Economic Decision Making",
       ],
     },
     {
@@ -110,7 +108,7 @@ const TIMELINE = {
       org: "BIT Mesra",
       time: "2019 – 2023",
       details: [
-        "Coursework: Programming Languages (C, Python), Data Structures and Algorithms, Internet of Things, OOP, Software Engineering, Power System Analysis, Control Systems, Probability and Statistics",
+        "Coursework: C/Python, DSA, IoT, OOP, Software Engineering, Power Systems, Control Systems, Probability & Statistics",
       ],
     },
   ],
@@ -121,7 +119,7 @@ const TIMELINE = {
       time: "Jan 2023 – May 2023",
       bullets: [
         "Analyzed probability distributions and energy demand datasets using Python/MATLAB, identifying efficiency gaps.",
-        "Built simulation models for forecasting under varying scenarios and presented structured reports to faculty.",
+        "Built forecasting simulations for varying scenarios and presented structured reports to faculty.",
         "Documented processes and created dashboards translating technical results into actionable insights.",
       ],
     },
@@ -130,8 +128,8 @@ const TIMELINE = {
       org: "Rajasthan State Electricity Board, Jaipur, India",
       time: "May 2022 – Dec 2022",
       bullets: [
-        "Collected, cleaned, and structured ERP/SCADA datasets, improving data quality and governance.",
-        "Wrote SQL queries and built dashboards (Excel/Tableau) to track outages and utilization.",
+        "Collected, cleaned, and structured ERP/SCADA datasets improving data quality and governance.",
+        "Wrote SQL and built Excel/Tableau dashboards to track outages and utilization.",
       ],
     },
     {
@@ -139,40 +137,39 @@ const TIMELINE = {
       org: "Independent Media, Jaipur, India",
       time: "Dec 2021 – May 2022",
       bullets: [
-        "Collected and analyzed web traffic and engagement data using Python and SQL to identify audience behavior.",
-        "Built Power BI dashboards and marketing performance reports, supporting campaign optimization.",
-        "Delivered competitive insights and audience analysis to guide content and branding decisions.",
+        "Analyzed web traffic & engagement with Python and SQL to identify audience behavior.",
+        "Built Power BI dashboards and marketing performance reports.",
+        "Delivered competitive insights and audience analysis for content & branding decisions.",
       ],
     },
   ],
 };
 
-// Projects (two subsections: Analytics, Dashboards)
 const PROJECTS = {
   analytics: [
     {
       title: "Predicting Energy Consumption of Europe using ANN",
-      tech: ["ANN", "PCA", "Python", "TensorFlow", "Keras", "Power BI", "Streamlit"],
+      tech: ["Python", "PCA", "ANN", "TensorFlow", "Keras", "Power BI", "Streamlit"],
       blurb:
-        "Processed 228k+ rows, applied PCA, and trained an ANN to forecast energy demand with R²≈0.98; deployed a realtime web app.",
+        "Processed 228k+ rows, applied PCA, trained ANN to forecast energy demand (R²≈0.98); deployed a realtime app.",
     },
     {
-      title: "Social Media Sentiment Analysis: Finance, Defense, and Healthcare in the USA",
-      tech: ["Python", "NLP", "TextBlob", "Viz"],
+      title: "Social Media Sentiment Analysis (Finance/Defense/Healthcare)",
+      tech: ["Python", "NLP", "TextBlob", "Visualization"],
       blurb:
-        "Classified sentiment on 10.5k+ items across sectors for two U.S. administrations; built visuals and compared macro indicators.",
+        "Classified sentiment on 10.5k+ items across sectors for two U.S. administrations; compared macro indicators.",
     },
     {
-      title: "Detecting Mental Health Conditions from Social Media Posts",
-      tech: ["Python", "TensorFlow", "Keras", "ETL", "Viz"],
+      title: "Detecting Mental Health Conditions from Social Posts",
+      tech: ["Python", "TensorFlow", "Keras", "ETL"],
       blurb:
-        "Built an ETL + deep learning pipeline on 90k+ Reddit posts to flag potential mental-health signals.",
+        "Built ETL + deep learning pipeline on 90k+ Reddit posts to flag potential mental-health signals.",
     },
     {
       title: "Predicting Player Online Gaming Behavior",
       tech: ["scikit-learn", "LogReg", "RandomForest", "KNN", "EDA"],
       blurb:
-        "Modeled engagement/retention on 20k+ game records with a robust ML pipeline.",
+        "Modeled engagement/retention on 20k+ game records with robust ML baselines.",
     },
     {
       title: "Superconductor Critical Temperature Prediction",
@@ -181,10 +178,10 @@ const PROJECTS = {
         "Predicted critical temperatures for superconductor materials; RF model achieved ~92% accuracy.",
     },
     {
-      title: "Analyzing EV Charging Infrastructure across the U.S.",
+      title: "Analyzing EV Charging Infrastructure (U.S.)",
       tech: ["SQL", "MongoDB", "Python", "GeoPandas", "Folium"],
       blurb:
-        "Modeled normalized schemas and pipelines; analyzed station coverage, energy use, and CO₂ impact with geo-visualizations.",
+        "Modeled schemas and pipelines; analyzed station coverage, energy use, and CO₂ impact with geo-visuals.",
     },
   ],
   dashboards: [
@@ -192,30 +189,30 @@ const PROJECTS = {
       title: "Walmart Superstore DataFlow: End-to-End ETL Project",
       tech: ["PostgreSQL", "Python", "SQLAlchemy", "Power BI"],
       blurb:
-        "Automated daily ingestion to Postgres; transformed KPIs and delivered an interactive Power BI dashboard.",
+        "Automated ingestion to Postgres; transformed KPIs; delivered interactive Power BI dashboard.",
     },
     {
-      title: "NYC MTA Subway Delay Insights Dashboard (2020–2025)",
+      title: "NYC MTA Subway Delay Insights (2020–2025)",
       tech: ["Power BI", "Time-series", "Ops Analytics"],
       blurb:
-        "Visualized 5-year delay trends, passenger time lost, and line/borough impacts to surface operational bottlenecks.",
+        "Visualized 5-year delay trends, passenger time lost, and line/borough impacts.",
     },
     {
       title: "Electronic Medical Record Dashboard",
       tech: ["Healthcare", "Python", "PostgreSQL", "Streamlit"],
       blurb:
-        "Predicted no-show probability on 110k+ appointments and exposed insights via a clinician-friendly dashboard.",
+        "Predicted no-show probability on 110k+ appointments and surfaced insights for clinicians.",
     },
   ],
 };
 
-// Publication
 const PUBLICATION = {
   title: "Research Publication",
   papers: [
     {
       authors: "P. Gupta, R. Verma, D. Verma and P. S. Rathore",
-      text: "Building a Stronger Grid: How Blockchain Can Improve Smart Grid Resilience",
+      text:
+        "Building a Stronger Grid: How Blockchain Can Improve Smart Grid Resilience",
       conf:
         "2023 IEEE Renewable Energy and Sustainable E-Mobility Conference (RESEM), Bhopal, India, 2023, pp. 1-7",
       doi: "10.1109/RESEM57584.2023.10236304",
@@ -224,16 +221,11 @@ const PUBLICATION = {
   ],
 };
 
-// Contact
 const CONTACT = {
-  mapLabel: "Beacon St, Boston",
   address: "Beacon St, Boston, MA, USA",
-  osm: { lat: 42.352, lon: -71.08 }, // used for external map links
 };
 
-// ------------------------------
-// Helpers
-// ------------------------------
+// ---- Helpers ----
 const sections = [
   { id: "home", label: "Home" },
   { id: "about", label: "About" },
@@ -246,51 +238,44 @@ const sections = [
 ];
 
 function useTypewriter(words, speed = 120, pause = 1200) {
-  const [index, setIndex] = useState(0);
+  const [i, setI] = useState(0);
   const [sub, setSub] = useState(0);
-  const [dir, setDir] = useState("fwd"); // "fwd" | "bwd"
-
+  const [dir, setDir] = useState("fwd");
   useEffect(() => {
-    const word = words[index % words.length] || "";
+    const w = words[i % words.length] || "";
     if (dir === "fwd") {
-      if (sub < word.length) {
+      if (sub < w.length) {
         const t = setTimeout(() => setSub((s) => s + 1), speed);
         return () => clearTimeout(t);
-      } else {
-        const t = setTimeout(() => setDir("bwd"), pause);
-        return () => clearTimeout(t);
       }
+      const t = setTimeout(() => setDir("bwd"), pause);
+      return () => clearTimeout(t);
     } else {
       if (sub > 0) {
         const t = setTimeout(() => setSub((s) => s - 1), speed / 2);
         return () => clearTimeout(t);
-      } else {
-        setDir("fwd");
-        setIndex((i) => (i + 1) % words.length);
       }
+      setDir("fwd");
+      setI((x) => (x + 1) % words.length);
     }
-  }, [sub, dir, index, words, speed, pause]);
-
-  const text = (words[index % words.length] || "").slice(0, sub);
+  }, [sub, dir, i, words, speed, pause]);
+  const text = (words[i % words.length] || "").slice(0, sub);
   return text + (dir === "fwd" ? "|" : "");
 }
 
 function useScrollSpy(ids) {
   const [active, setActive] = useState(ids[0]);
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        });
-      },
-      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+    const obs = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
+      { rootMargin: "-40% 0px -55% 0px" }
     );
     ids.forEach((id) => {
       const el = document.getElementById(id);
-      if (el) observer.observe(el);
+      if (el) obs.observe(el);
     });
-    return () => observer.disconnect();
+    return () => obs.disconnect();
   }, [ids]);
   return active;
 }
@@ -321,70 +306,48 @@ const Section = ({ id, title, children }) => (
   </section>
 );
 
-// ------------------------------
-// Dev Tests (lightweight runtime checks)
-// ------------------------------
+// ---- Dev tests (tiny runtime checks) ----
 function runDevTests() {
-  const results = [];
-  const pass = (name) => results.push({ name, ok: true });
-  const fail = (name, detail) => results.push({ name, ok: false, detail });
+  const out = [];
+  const ok = (n) => out.push({ n, pass: true });
+  const bad = (n, d) => out.push({ n, pass: false, d });
 
-  // Test 1: SKILLS shape & icon component
   try {
-    if (!Array.isArray(SKILLS) || SKILLS.length === 0) throw new Error("SKILLS empty");
-    const bad = SKILLS.find((s) => typeof s.icon !== "function");
-    if (bad) throw new Error(`Skill '${bad?.name}' icon is not a component`);
-    pass("SKILLS icon components");
+    if (!Array.isArray(SKILLS) || SKILLS.length === 0) throw new Error("empty");
+    const badIcon = SKILLS.find((s) => typeof s.icon !== "function");
+    if (badIcon) throw new Error(`icon not component: ${badIcon.name}`);
+    ok("SKILLS icons");
   } catch (e) {
-    fail("SKILLS icon components", String(e.message || e));
+    bad("SKILLS icons", String(e.message || e));
   }
 
-  // Test 2: Email sanity (no comma, contains @ + .)
   try {
-    const email = PROFILE.email || "";
-    if (/,/.test(email)) throw new Error("Email contains a comma");
-    if (!/@/.test(email) || !/\./.test(email)) throw new Error("Email missing @ or .");
-    pass("PROFILE.email format");
+    if (!/@/.test(PROFILE.email) || !/\./.test(PROFILE.email)) throw new Error("format");
+    ok("Email format");
   } catch (e) {
-    fail("PROFILE.email format", String(e.message || e));
+    bad("Email format", String(e.message || e));
   }
 
-  // Test 3: Publication present with DOI
   try {
-    if (!Array.isArray(PUBLICATION.papers) || PUBLICATION.papers.length === 0) throw new Error("No papers");
-    const hasDoi = PUBLICATION.papers.every((p) => !!p.doi && !!p.doiUrl);
-    if (!hasDoi) throw new Error("Paper missing DOI or doiUrl");
-    pass("PUBLICATION papers & DOI");
+    if (!PROJECTS.analytics?.length || !PROJECTS.dashboards?.length) throw new Error("missing");
+    ok("Projects populated");
   } catch (e) {
-    fail("PUBLICATION papers & DOI", String(e.message || e));
+    bad("Projects populated", String(e.message || e));
   }
 
-  // Test 4: Projects populated
-  try {
-    if (!PROJECTS.analytics?.length || !PROJECTS.dashboards?.length) throw new Error("Projects missing");
-    pass("PROJECTS populated");
-  } catch (e) {
-    fail("PROJECTS populated", String(e.message || e));
-  }
-
-  results.forEach((r) => {
-    const tag = r.ok ? "log" : "error";
-    console[tag](r.ok ? `✔ DEV TEST: ${r.name}` : `✖ DEV TEST: ${r.name} — ${r.detail}`);
-  });
-  return results;
+  return out;
 }
 
 const DevTests = () => {
-  const [results, setResults] = useState([]);
-  useEffect(() => setResults(runDevTests()), []);
+  const [r, setR] = useState([]);
+  useEffect(() => setR(runDevTests()), []);
   return (
     <details className="mt-6 text-xs text-slate-500">
       <summary>Developer Tests</summary>
       <ul className="mt-2 list-disc pl-5">
-        {results.map((r) => (
-          <li key={r.name} className={r.ok ? "text-green-700" : "text-red-700"}>
-            {r.ok ? "✔" : "✖"} {r.name}
-            {!r.ok && r.detail ? <span className="ml-2">— {r.detail}</span> : null}
+        {r.map((x) => (
+          <li key={x.n} className={x.pass ? "text-green-700" : "text-red-700"}>
+            {x.pass ? "✔" : "✖"} {x.n} {x.d ? `— ${x.d}` : ""}
           </li>
         ))}
       </ul>
@@ -392,17 +355,21 @@ const DevTests = () => {
   );
 };
 
-// ------------------------------
-// App
-// ------------------------------
+// ---- App ----
 export default function App() {
   const typed = useTypewriter(PROFILE.titleWords);
   const active = useScrollSpy(sections.map((s) => s.id));
 
+  // smooth scroll
+  useEffect(() => {
+    document.documentElement.style.scrollBehavior = "smooth";
+    return () => (document.documentElement.style.scrollBehavior = "auto");
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
       <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] gap-6">
-        {/* Sidebar (dark like reference) */}
+        {/* Sidebar */}
         <aside className="sticky top-6 self-start">
           <div className="rounded-2xl bg-slate-900 text-white p-6 shadow-sm">
             <div className="flex flex-col items-center text-center">
@@ -411,24 +378,20 @@ export default function App() {
               <p className="text-sm text-slate-300 mt-1">{PROFILE.tagline}</p>
 
               <div className="mt-4 flex items-center gap-3">
-                <a href={PROFILE.socials.github} target="_blank" className="p-2 rounded-full bg-slate-800 hover:bg-slate-700" aria-label="GitHub" rel="noreferrer">
+                <a href={PROFILE.socials.github} target="_blank" rel="noreferrer" className="p-2 rounded-full bg-slate-800 hover:bg-slate-700">
                   <Github className="w-5 h-5" />
                 </a>
-                <a href={PROFILE.socials.linkedin} target="_blank" className="p-2 rounded-full bg-slate-800 hover:bg-slate-700" aria-label="LinkedIn" rel="noreferrer">
+                <a href={PROFILE.socials.linkedin} target="_blank" rel="noreferrer" className="p-2 rounded-full bg-slate-800 hover:bg-slate-700">
                   <Linkedin className="w-5 h-5" />
                 </a>
-                <a href={`mailto:${PROFILE.email}`} className="p-2 rounded-full bg-slate-800 hover:bg-slate-700" aria-label="Email">
+                <a href={`mailto:${PROFILE.email}`} className="p-2 rounded-full bg-slate-800 hover:bg-slate-700">
                   <Mail className="w-5 h-5" />
                 </a>
               </div>
 
               <div className="mt-4 flex flex-wrap justify-center gap-2">
-                <Badge>
-                  <MapPin className="w-4 h-4" /> {PROFILE.location}
-                </Badge>
-                <Badge>
-                  <Mail className="w-4 h-4" /> {PROFILE.email}
-                </Badge>
+                <Badge><MapPin className="w-4 h-4" /> {PROFILE.location}</Badge>
+                <Badge><Mail className="w-4 h-4" /> {PROFILE.email}</Badge>
               </div>
 
               <nav className="mt-6 w-full">
@@ -456,18 +419,45 @@ export default function App() {
           </div>
         </aside>
 
-        {/* Main content */}
+        {/* Main */}
         <main>
-          {/* Hero (light, subtle) */}
-          <section id="home" className="relative overflow-hidden rounded-3xl border bg-white p-10 min-h-[260px] flex items-center">
+          {/* Hero */}
+          <section
+            id="home"
+            className="relative overflow-hidden rounded-3xl border bg-white p-10 min-h-[280px] flex items-center"
+          >
+            <div
+              className="absolute inset-0 -z-10 opacity-25"
+              style={{
+                backgroundImage:
+                  "url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
             <div className="w-full">
-              <motion.h2 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-5xl md:text-6xl font-extrabold text-slate-900">
+              <motion.h2
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-5xl md:text-6xl font-extrabold text-slate-900"
+              >
                 {PROFILE.name}
               </motion.h2>
-              <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.05 }} className="mt-3 text-xl font-medium text-slate-700">
+              <motion.p
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.05 }}
+                className="mt-3 text-xl font-medium text-slate-700"
+              >
                 I’m a <span className="font-bold text-slate-900">{typed}</span>
               </motion.p>
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.15 }} className="mt-4 max-w-3xl text-slate-600">
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.15 }}
+                className="mt-4 max-w-3xl text-slate-600"
+              >
                 {PROFILE.tagline}
               </motion.p>
             </div>
@@ -485,7 +475,6 @@ export default function App() {
                     <p className="mb-2"><span className="font-semibold">Email:</span> {PROFILE.email}</p>
                   </div>
                   <div>
-                    <p className="mb-2"><span className="font-semibold">Right-to-work:</span> Yes (example)</p>
                     <p className="mb-2"><span className="font-semibold">Open to:</span> Data/Analytics/DE roles</p>
                     <p className="mb-2"><span className="font-semibold">Availability:</span> Immediate</p>
                   </div>
@@ -636,12 +625,11 @@ export default function App() {
             </Card>
           </Section>
 
-          {/* Contact (layout matching earlier version) */}
+          {/* Contact */}
           <Section id="contact" title="Contact">
             <div className="grid lg:grid-cols-2 gap-6">
               <Card>
                 <div className="grid grid-cols-1 gap-6">
-                  {/* Address */}
                   <div className="flex items-start gap-4">
                     <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-50 border">
                       <MapPin className="w-6 h-6 text-sky-600" />
@@ -652,7 +640,6 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Email */}
                   <div className="flex items-start gap-4">
                     <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-50 border">
                       <Mail className="w-6 h-6 text-sky-600" />
@@ -663,7 +650,6 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Map embed */}
                   <div className="rounded-xl overflow-hidden border">
                     <iframe
                       title="Beacon St Map"
