@@ -36,7 +36,7 @@ const {
 // ---- Profile & content ----
 const PROFILE = {
   name: "Rohan Verma",
-  titleWords: ["Data Analyst", "Data Engineer", "Consultant"],
+  titleWords: ["Data Analyst", "Data Engineer", "Data Scientist"],
   avatar: "/profile.jpg", // put your photo in /public/profile.jpg
   tagline:
     "Professional and enthusiastic master's student with a strong blend of analytics and engineering.",
