@@ -524,54 +524,43 @@ export default function App() {
           </section>
 
           {/* ABOUT */}
-          <Shell id="about" title="About">
-            <div className="grid md:grid-cols-[220px_minmax(0,1fr)] gap-6 items-start">
-              <img
-                src={PROFILE.avatar}
-                alt="About avatar"
-                className="rounded-2xl w-full h-56 object-cover border"
-              />
-              <Card>
-                <div className="grid sm:grid-cols-2 gap-6 text-sm">
-                  <div>
-                    <p className="mb-2">
-                      <span className="font-semibold">Degree:</span> Master
-                    </p>
-                    <p className="mb-2">
-                      <span className="font-semibold">City:</span>{" "}
-                      {PROFILE.location}
-                    </p>
-                    <p className="mb-2">
-                      <span className="font-semibold">Email:</span>{" "}
-                      {PROFILE.email}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="mb-2">
-                      <span className="font-semibold">Open to:</span>{" "}
-                      Data/Analytics/DE roles
-                    </p>
-                    <p className="mb-2">
-                      <span className="font-semibold">Availability:</span>{" "}
-                      Immediate
-                    </p>
-                  </div>
-                </div>
-                <p className="mt-4 text-slate-700">
-                  {PROFILE.tagline} Committed to continuous learning in modern
-                  data technologies and product thinking.
-                </p>
-              </Card>
-            </div>
-            <div className="mt-10 flex justify-center">
-              <img
-                src="/gif-instincts.jpg"
-                alt="Should I follow the data or my instincts?"
-                loading="lazy"
-                className="rounded-2xl border shadow-sm max-h-[340px] w-auto"
-              />
-            </div>
-          </Shell>
+<Shell id="about" title="About">
+  <div className="grid md:grid-cols-[220px_minmax(0,1fr)] gap-6 items-start">
+    <img
+      src={PROFILE.avatar}
+      alt="About avatar"
+      className="rounded-2xl w-full h-56 object-cover border"
+    />
+    <Card>
+      <div className="grid sm:grid-cols-2 gap-6 text-sm">
+        <div>
+          <p className="mb-2 text-sm">
+            <span className="font-semibold">Degree:</span> Master
+          </p>
+          <p className="mb-2 text-sm">
+            <span className="font-semibold">City:</span> {PROFILE.location}
+          </p>
+          <p className="mb-2 text-sm">
+            <span className="font-semibold">Email:</span> {PROFILE.email}
+          </p>
+        </div>
+        <div>
+          <p className="mb-2 text-sm">
+            <span className="font-semibold">Open to:</span> Data/Analytics/DE roles
+          </p>
+          <p className="mb-2 text-sm">
+            <span className="font-semibold">Availability:</span> Immediate
+          </p>
+        </div>
+      </div>
+      <p className="mt-4 text-slate-700 text-sm leading-relaxed">
+        {PROFILE.tagline} Committed to continuous learning in modern
+        data technologies and product thinking.
+      </p>
+    </Card>
+  </div>
+</Shell>
+
 
         {/* SKILLS (original look, larger size) */}
 <Shell id="skills" title="Skills & Certifications">
