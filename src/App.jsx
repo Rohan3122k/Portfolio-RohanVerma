@@ -523,43 +523,51 @@ export default function App() {
             </div>
           </section>
 
-          {/* ABOUT */}
+       {/* ABOUT */}
 <Shell id="about" title="About">
-  <div className="grid md:grid-cols-[220px_minmax(0,1fr)] gap-6 items-start">
+  <div className="grid md:grid-cols-[280px_minmax(0,1fr)] gap-8 items-start">
+    {/* Profile Image */}
     <img
       src={PROFILE.avatar}
       alt="About avatar"
-      className="rounded-2xl w-full h-56 object-cover border"
+      className="rounded-full w-64 h-64 object-cover border shadow-md mx-auto md:mx-0"
     />
-    <Card>
-      <div className="grid sm:grid-cols-2 gap-6 text-sm">
-        <div>
-          <p className="mb-2 text-sm">
-            <span className="font-semibold">Degree:</span> Master
-          </p>
-          <p className="mb-2 text-sm">
-            <span className="font-semibold">City:</span> {PROFILE.location}
-          </p>
-          <p className="mb-2 text-sm">
-            <span className="font-semibold">Email:</span> {PROFILE.email}
-          </p>
-        </div>
-        <div>
-          <p className="mb-2 text-sm">
-            <span className="font-semibold">Open to:</span> Data/Analytics/DE roles
-          </p>
-          <p className="mb-2 text-sm">
-            <span className="font-semibold">Availability:</span> Immediate
-          </p>
-        </div>
+
+    {/* Details */}
+    <div>
+      <h3 className="text-xl font-bold mb-4">Data Consultant / Engineer / Analyst</h3>
+      <div className="grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm">
+        <p>
+          <span className="font-semibold">Degree:</span> Master
+        </p>
+        <p>
+          <span className="font-semibold">City:</span> {PROFILE.location}
+        </p>
+        <p>
+          <span className="font-semibold">Email:</span> {PROFILE.email}
+        </p>
+        <p>
+          <span className="font-semibold">Open to:</span> Data/Analytics/DE roles
+        </p>
+        <p>
+          <span className="font-semibold">Availability:</span> Immediate
+        </p>
+        <p>
+          <span className="font-semibold">Right-to-work:</span> Yes & No sponsorhip required
+        </p>
       </div>
-      <p className="mt-4 text-slate-700 text-sm leading-relaxed">
-        {PROFILE.tagline} Committed to continuous learning in modern
-        data technologies and product thinking.
+
+      {/* Summary */}
+      <p className="mt-6 text-slate-700 text-sm leading-relaxed">
+        {PROFILE.tagline} Committed to continuous learning in modern data
+        technologies and product thinking. Passionate about turning raw datasets
+        into actionable insights that drive decisions and deliver measurable
+        impact.
       </p>
-    </Card>
+    </div>
   </div>
 </Shell>
+
 
 
         {/* SKILLS (original look, larger size) */}
