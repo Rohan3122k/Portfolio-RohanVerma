@@ -379,6 +379,7 @@ const DevTests = () => {
 // ---- App ----
 export default function App() {
   const typed = useTypewriter(PROFILE.titleWords);
+  const [activeTab, setActiveTab] = useState("analytics");
   const active = useScrollSpy(sections.map((s) => s.id));
 
   // Smooth page scroll + fullpage snap
