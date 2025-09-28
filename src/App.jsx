@@ -36,10 +36,10 @@ const {
 // ---- Profile & content ----
 const PROFILE = {
   name: "Rohan Verma",
-  titleWords: ["Data Analyst", "Data Engineer", "Consultant"],
+  titleWords: ["Data Analyst", "Data Engineer", "Data Scientist"],
   avatar: "/profile.jpg",
   tagline:
-    "Professional and enthusiastic master's student with a strong blend of analytics and engineering.",
+    "Translating messy datasets into clean insights bosses can nod at.",
   location: "Beacon St, Boston, MA, USA",
   email: "verma.rohan@northeastern.edu",
   socials: {
