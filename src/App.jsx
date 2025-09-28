@@ -218,8 +218,18 @@ function usePrefersReducedMotion() {
   return reduce;
 }
 
-const Gif = ({ src, alt, className = '' }) => {
+const Gif = ({ src, alt, className = "" }) => {
   const reduce = usePrefersReducedMotion();
+  if (reduce) return null; // Respect reduced motion settings
+  return (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      className={`rounded-2xl border shadow-sm ${className}`}
+    />
+  );
+};
   if (reduce) return null; // Respect reduced motion settings
   return (
     <img
