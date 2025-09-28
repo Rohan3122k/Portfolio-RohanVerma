@@ -1,67 +1,53 @@
 // /api/contact.js
-import { Resend } from "@resend/node";
+import { Resend } from "resend";
 
-/**
- * Vercel Serverless Function
- * Expects JSON: { name, email, message }
- * Env vars required:
- *   - RESEND_API_KEY
- *   - CONTACT_TO (your inbox email)
- *   - CONTACT_FROM (a verified sender, e.g. "portfolio@yourdomain.com")
- */
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
-    return res.status(405).json({ error: "Method Not Allowed" });
+    return res.status(405).json({ ok: false, error: "Method not allowed" });
   }
 
   try {
     const { name, email, message } = req.body || {};
-    if (
-      typeof name !== "string" ||
-      typeof email !== "string" ||
-      typeof message !== "string" ||
-      !name.trim() ||
-      !email.trim() ||
-      !message.trim()
-    ) {
-      return res.status(400).json({ error: "Invalid payload" });
+    if (!name || !email || !message) {
+      return res.status(400).json({ ok: false, error: "Missing fields" });
     }
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const subject = `Portfolio contact from ${name}`;
-    const html = `
-      <div style="font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height:1.6;">
-        <h2 style="margin:0 0 12px">New portfolio message</h2>
-        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-        <p><strong>Message:</strong></p>
-        <pre style="white-space:pre-wrap;background:#f6f7f9;padding:12px;border-radius:8px;border:1px solid #e5e7eb;">${escapeHtml(message)}</pre>
-      </div>
-    `;
+    // TIP: Use a verified domain in production, e.g. "Rohan <hello@your-domain.com>"
+    // For trial, "onboarding@resend.dev" works to verified recipients.
+    const from = "Rohan Portfolio <onboarding@resend.dev>";
+    const to = process.env.CONTACT_TO_EMAIL || "verma.rohan@northeastern.edu";
 
     await resend.emails.send({
-      from: process.env.CONTACT_FROM, // e.g. "Rohan Portfolio <hello@yourdomain.com>"
-      to: process.env.CONTACT_TO,     // your inbox
-      reply_to: email,                // lets you reply straight to sender
-      subject,
-      html,
+      from,
+      to,
+      subject: `New portfolio message from ${name}`,
+      reply_to: email,
+      html: `
+        <div style="font-family: Arial, sans-serif; line-height:1.5;">
+          <h2>New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+          <p><strong>Message:</strong></p>
+          <p>${escapeHtml(message).replace(/\n/g, "<br/>")}</p>
+        </div>
+      `,
+      text: `New message from ${name} (${email})\n\n${message}`,
     });
 
     return res.status(200).json({ ok: true });
   } catch (err) {
-    console.error("Email send failed:", err);
-    return res.status(500).json({ error: "Failed to send email" });
+    console.error("Resend error:", err);
+    return res.status(500).json({ ok: false, error: "Email send failed" });
   }
 }
 
-// Small HTML escape helper
-function escapeHtml(str) {
+/** very small HTML escaper */
+function escapeHtml(str = "") {
   return String(str)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
