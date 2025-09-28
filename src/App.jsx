@@ -413,7 +413,7 @@ export default function App() {
                 className="w-28 h-28 rounded-full object-cover shadow-md"
               />
               <h1 className="mt-4 text-2xl font-bold">{PROFILE.name}</h1>
-              <p className="text-sm text-slate-300 mt-1">{PROFILE.tagline}</p>
+              
 
               <div className="mt-4 flex items-center gap-3">
                 <a
@@ -444,9 +444,7 @@ export default function App() {
                 <Badge>
                   <MapPin className="w-4 h-4" /> {PROFILE.location}
                 </Badge>
-                <Badge>
-                  <Mail className="w-4 h-4" /> {PROFILE.email}
-                </Badge>
+                
               </div>
 
               <nav className="mt-6 w-full">
