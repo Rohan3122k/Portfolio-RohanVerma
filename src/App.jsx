@@ -831,13 +831,13 @@ export default function App() {
             });
 
             if (res.ok) {
-              alert("✅ Your message has been sent!");
+              alert(" Your message has been sent!");
               e.currentTarget.reset();
             } else {
-              alert("❌ Failed to send message. Try again.");
+              alert(" Failed to send message. Try again.");
             }
           } catch (err) {
-            alert("⚠️ Error: " + err.message);
+            alert(" Error: " + err.message);
           }
         }}
         className="space-y-3"
