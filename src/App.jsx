@@ -535,7 +535,7 @@ export default function App() {
 
     {/* Details */}
     <div>
-      <h3 className="text-xl font-bold mb-4">Data Consultant / Engineer / Analyst</h3>
+      <h3 className="text-xl font-bold mb-4">Data Analyst / Engineer / Scientist</h3>
       <div className="grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm">
         <p>
           <span className="font-semibold">Degree:</span> Master
