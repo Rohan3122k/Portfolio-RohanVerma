@@ -828,23 +828,43 @@ export default function App() {
               <Card>
                 <h3 className="font-semibold mb-3">Leave a message</h3>
                 <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    const data = new FormData(e.currentTarget);
-                    const name = data.get("name");
-                    const email = data.get("email");
-                    const msg = data.get("message");
-                    const mailto = `mailto:${PROFILE.email}?subject=Portfolio%20contact%20from%20${encodeURIComponent(
-                      String(name || "")
-                    )}&body=${encodeURIComponent(
-                      String(msg || "")
-                    )}%0D%0A%0D%0AContact:%20${encodeURIComponent(
-                      String(email || "")
-                    )}`;
-                    window.location.href = mailto;
-                  }}
-                  className="space-y-3"
-                >
+  onSubmit={async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    const name = String(data.get("name") || "");
+    const email = String(data.get("email") || "");
+    const message = String(data.get("message") || "");
+
+    // basic UX
+    const btn = form.querySelector("button[type='submit']");
+    const original = btn?.textContent;
+    if (btn) btn.textContent = "Sending...";
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      const json = await res.json();
+      if (!res.ok || !json.ok) throw new Error(json.error || "Send failed");
+
+      alert("Thanks! Your message has been sent.");
+      form.reset();
+    } catch (err) {
+      alert("Sorry, something went wrong sending your message.");
+      console.error(err);
+    } finally {
+      if (btn) btn.textContent = original || "Submit";
+    }
+  }}
+  className="space-y-3"
+>
+
+
                   <input
                     name="name"
                     required
