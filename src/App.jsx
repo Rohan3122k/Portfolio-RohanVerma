@@ -563,6 +563,14 @@ export default function App() {
                 </p>
               </Card>
             </div>
+            <div className="mt-10 flex justify-center">
+              <img
+                src="/gif-instincts.jpg"
+                alt="Should I follow the data or my instincts?"
+                loading="lazy"
+                className="rounded-2xl border shadow-sm max-h-[340px] w-auto"
+              />
+            </div>
           </Shell>
 
           {/* SKILLS */}
