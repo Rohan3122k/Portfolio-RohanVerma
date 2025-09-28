@@ -830,39 +830,28 @@ export default function App() {
                 <form
   onSubmit={async (e) => {
     e.preventDefault();
-    const form = e.currentTarget;
-    const data = new FormData(form);
+    const data = new FormData(e.currentTarget);
+    const name = data.get("name");
+    const email = data.get("email");
+    const message = data.get("message");
 
-    const name = String(data.get("name") || "");
-    const email = String(data.get("email") || "");
-    const message = String(data.get("message") || "");
+    const res = await fetch("/api/send-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, message }),
+    });
 
-    // basic UX
-    const btn = form.querySelector("button[type='submit']");
-    const original = btn?.textContent;
-    if (btn) btn.textContent = "Sending...";
-
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
-      });
-
-      const json = await res.json();
-      if (!res.ok || !json.ok) throw new Error(json.error || "Send failed");
-
-      alert("Thanks! Your message has been sent.");
-      form.reset();
-    } catch (err) {
-      alert("Sorry, something went wrong sending your message.");
-      console.error(err);
-    } finally {
-      if (btn) btn.textContent = original || "Submit";
+    if (res.ok) {
+      alert("Your message has been sent!");
+    } else {
+      alert("Failed to send message. Try again.");
     }
   }}
   className="space-y-3"
 >
+  {/* your inputs here */}
+</form>
+
 
 
                   <input
