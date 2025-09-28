@@ -771,7 +771,7 @@ export default function App() {
             </Card>
 
             {/* Research GIF (centered, responsive) */}
-            <GifBox src="/gif-research.gif" alt="Research animation" />
+            <GifBox src="/gif-data.jpg" alt="Research animation" />
           </Shell>
 
           {/* CONTACT */}
