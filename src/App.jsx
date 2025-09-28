@@ -633,79 +633,70 @@ export default function App() {
             <GifBox src="/gif-projects.gif" alt="Projects animation" />
           </Shell>
 
-          {/* PROJECTS */}
-          // Inside App component -> replace your current Projects <Shell> block with this
-
+        {/* PROJECTS */}
 <Shell id="projects" title="Projects">
-  <div className="w-full">
-    {/* Tabs */}
-    <div className="mb-8 border-b border-slate-200 flex gap-6">
-      <button
-        onClick={() => setActiveTab("analytics")}
-        className={`pb-2 text-lg font-semibold transition-colors ${
-          activeTab === "analytics"
-            ? "text-sky-600 border-b-2 border-sky-600"
-            : "text-slate-600 hover:text-sky-600"
-        }`}
-      >
-        Analytics
-      </button>
-      <button
-        onClick={() => setActiveTab("dashboards")}
-        className={`pb-2 text-lg font-semibold transition-colors ${
-          activeTab === "dashboards"
-            ? "text-sky-600 border-b-2 border-sky-600"
-            : "text-slate-600 hover:text-sky-600"
-        }`}
-      >
-        Dashboards
-      </button>
-    </div>
-
-    {/* Projects Grid */}
-    {activeTab === "analytics" && (
-      <div className="grid md:grid-cols-2 gap-4">
-        {PROJECTS.analytics.map((p) => (
-          <Card key={p.title}>
-            <h4 className="font-semibold">{p.title}</h4>
-            <p className="mt-2 text-sm text-slate-700">{p.blurb}</p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {p.tech.map((t) => (
-                <span
-                  key={t}
-                  className="text-xs border rounded-full px-2 py-1 bg-slate-50"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-          </Card>
-        ))}
-      </div>
-    )}
-
-    {activeTab === "dashboards" && (
-      <div className="grid md:grid-cols-2 gap-4">
-        {PROJECTS.dashboards.map((p) => (
-          <Card key={p.title}>
-            <h4 className="font-semibold">{p.title}</h4>
-            <p className="mt-2 text-sm text-slate-700">{p.blurb}</p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {p.tech.map((t) => (
-                <span
-                  key={t}
-                  className="text-xs border rounded-full px-2 py-1 bg-slate-50"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-          </Card>
-        ))}
-      </div>
-    )}
+  {/* Tabs */}
+  <div className="mb-8 border-b border-slate-200 flex gap-6">
+    <button
+      onClick={() => setActiveTab("analytics")}
+      className={`pb-2 text-lg font-semibold transition-colors ${
+        activeTab === "analytics"
+          ? "text-sky-600 border-b-2 border-sky-600"
+          : "text-slate-600 hover:text-sky-600"
+      }`}
+    >
+      Analytics
+    </button>
+    <button
+      onClick={() => setActiveTab("dashboards")}
+      className={`pb-2 text-lg font-semibold transition-colors ${
+        activeTab === "dashboards"
+          ? "text-sky-600 border-b-2 border-sky-600"
+          : "text-slate-600 hover:text-sky-600"
+      }`}
+    >
+      Dashboards
+    </button>
   </div>
+
+  {/* Projects Grid */}
+  {activeTab === "analytics" && (
+    <div className="grid md:grid-cols-2 gap-4">
+      {PROJECTS.analytics.map((p) => (
+        <Card key={p.title}>
+          <h4 className="font-semibold">{p.title}</h4>
+          <p className="mt-2 text-sm text-slate-700">{p.blurb}</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {p.tech.map((t) => (
+              <span key={t} className="text-xs border rounded-full px-2 py-1 bg-slate-50">
+                {t}
+              </span>
+            ))}
+          </div>
+        </Card>
+      ))}
+    </div>
+  )}
+
+  {activeTab === "dashboards" && (
+    <div className="grid md:grid-cols-2 gap-4">
+      {PROJECTS.dashboards.map((p) => (
+        <Card key={p.title}>
+          <h4 className="font-semibold">{p.title}</h4>
+          <p className="mt-2 text-sm text-slate-700">{p.blurb}</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {p.tech.map((t) => (
+              <span key={t} className="text-xs border rounded-full px-2 py-1 bg-slate-50">
+                {t}
+              </span>
+            ))}
+          </div>
+        </Card>
+      ))}
+    </div>
+  )}
 </Shell>
+
 
 
           {/* RESUME */}
