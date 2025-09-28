@@ -775,119 +775,105 @@ export default function App() {
           </Shell>
 
           {/* CONTACT */}
-          <Shell id="contact" title="Contact">
-            <div className="grid lg:grid-cols-2 gap-6">
-              <Card>
-                <div className="grid grid-cols-1 gap-6">
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-50 border">
-                      <MapPin className="w-6 h-6 text-sky-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">Address</h3>
-                      <p className="text-sm text-slate-700">{CONTACT.address}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-50 border">
-                      <Mail className="w-6 h-6 text-sky-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">Email Me</h3>
-                      <p className="text-sm text-slate-700">{PROFILE.email}</p>
-                    </div>
-                  </div>
-                  <div className="rounded-xl overflow-hidden border">
-                    <iframe
-                      title="Beacon St Map"
-                      className="w-full h-64"
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      src={`https://www.google.com/maps?q=${encodeURIComponent(
-                        CONTACT.address
-                      )}&output=embed`}
-                    />
-                  </div>
-                  <p className="text-xs text-slate-500">
-                    If the embedded map doesn’t load,{" "}
-                    <a
-                      className="underline"
-                      target="_blank"
-                      rel="noreferrer"
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                        CONTACT.address
-                      )}`}
-                    >
-                      open in Google Maps
-                    </a>
-                    .
-                  </p>
-                </div>
-              </Card>
+<Shell id="contact" title="Contact">
+  <div className="grid lg:grid-cols-2 gap-6">
+    {/* Contact Info */}
+    <Card>
+      <div className="grid grid-cols-1 gap-6">
+        <div className="flex items-start gap-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-50 border">
+            <MapPin className="w-6 h-6 text-sky-600" />
+          </div>
+          <div>
+            <h3 className="font-semibold">Address</h3>
+            <p className="text-sm text-slate-700">{CONTACT.address}</p>
+          </div>
+        </div>
+        <div className="flex items-start gap-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-50 border">
+            <Mail className="w-6 h-6 text-sky-600" />
+          </div>
+          <div>
+            <h3 className="font-semibold">Email Me</h3>
+            <p className="text-sm text-slate-700">{PROFILE.email}</p>
+          </div>
+        </div>
+        <div className="rounded-xl overflow-hidden border">
+          <iframe
+            title="Beacon St Map"
+            className="w-full h-64"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            src={`https://www.google.com/maps?q=${encodeURIComponent(
+              CONTACT.address
+            )}&output=embed`}
+          />
+        </div>
+      </div>
+    </Card>
 
-              <Card>
-                <h3 className="font-semibold mb-3">Leave a message</h3>
-                <form
-  onSubmit={async (e) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const name = data.get("name");
-    const email = data.get("email");
-    const message = data.get("message");
+    {/* Contact Form */}
+    <Card>
+      <h3 className="font-semibold mb-3">Leave a message</h3>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          const data = new FormData(e.currentTarget);
+          const name = data.get("name");
+          const email = data.get("email");
+          const message = data.get("message");
 
-    const res = await fetch("/api/send-email", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, message }),
-    });
+          try {
+            const res = await fetch("/api/send-email", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ name, email, message }),
+            });
 
-    if (res.ok) {
-      alert("Your message has been sent!");
-    } else {
-      alert("Failed to send message. Try again.");
-    }
-  }}
-  className="space-y-3"
->
-  {/* your inputs here */}
-</form>
+            if (res.ok) {
+              alert("✅ Your message has been sent!");
+              e.currentTarget.reset();
+            } else {
+              alert("❌ Failed to send message. Try again.");
+            }
+          } catch (err) {
+            alert("⚠️ Error: " + err.message);
+          }
+        }}
+        className="space-y-3"
+      >
+        <input
+          name="name"
+          required
+          placeholder="Your Name"
+          className="w-full rounded-xl border px-3 py-2"
+        />
+        <input
+          name="email"
+          required
+          type="email"
+          placeholder="Email"
+          className="w-full rounded-xl border px-3 py-2"
+        />
+        <textarea
+          name="message"
+          required
+          rows={5}
+          placeholder="Message"
+          className="w-full rounded-xl border px-3 py-2"
+        />
+        <button
+          type="submit"
+          className="rounded-2xl bg-sky-500 text-white px-4 py-2 font-medium hover:bg-sky-600"
+        >
+          Submit
+        </button>
+      </form>
+      <DevTests />
+    </Card>
+  </div>
+</Shell>
 
-
-
-                  <input
-                    name="name"
-                    required
-                    placeholder="Your Name"
-                    className="w-full rounded-xl border px-3 py-2"
-                  />
-                  <input
-                    name="email"
-                    required
-                    type="email"
-                    placeholder="Email"
-                    className="w-full rounded-xl border px-3 py-2"
-                  />
-                  <p className="text-xs text-slate-500">
-                    This will help me respond to your query via an email.
-                  </p>
-                  <textarea
-                    name="message"
-                    required
-                    rows={5}
-                    placeholder="Message"
-                    className="w-full rounded-xl border px-3 py-2"
-                  />
-                  <button
-                    type="submit"
-                    className="rounded-2xl bg-sky-500 text-white px-4 py-2 font-medium hover:bg-sky-600"
-                  >
-                    Submit
-                  </button>
-                </form>
-                <DevTests />
-              </Card>
-            </div>
-          </Shell>
 
           <div className="px-8 md:px-12 lg:px-16">
             <footer className="pb-10 text-center text-xs text-slate-500">
