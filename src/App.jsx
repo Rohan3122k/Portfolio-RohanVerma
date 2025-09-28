@@ -225,7 +225,7 @@ const Gif = ({ src, alt, className = '' }) => {
     <img
       src={src}
       alt={alt}
-      loading=\"lazy\"
+      loading="lazy"
       className={`rounded-2xl border shadow-sm ${className}`}
     />
   );
