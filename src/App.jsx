@@ -574,43 +574,58 @@ export default function App() {
           </Shell>
 
           {/* SKILLS */}
-          <Shell id="skills" title="Skills & Certifications">
-            <Card>
-              <p className="text-slate-700 mb-4 text-sm">My tech stack includes:</p>
-              <div className="flex flex-wrap gap-3">
-                {SKILLS.map((s) => {
-                  const b = BRAND[s.name];
-                  return (
-                    <button
-                      key={s.name}
-                      className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm text-white shadow-sm"
-                      style={{ backgroundColor: b?.color || "#0ea5e9" }}
-                    >
-                      {b?.logo ? (
-                        <img src={b.logo} alt={s.name} className="w-4 h-4" />
-                      ) : (
-                        React.createElement(s.icon, { className: "w-4 h-4" })
-                      )}
-                      {s.name}
-                    </button>
-                  );
-                })}
-              </div>
+<Shell id="skills" title="Skills & Certifications">
+  <Card>
+    <p className="text-slate-700 mb-4 text-sm">My tech stack includes:</p>
 
-              <h3 className="mt-6 mb-3 text-lg font-semibold">Certifications</h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {CERTS.map((c) => (
-                  <div
-                    key={c.name}
-                    className="flex items-center gap-3 rounded-xl border bg-white p-4"
-                  >
-                    <Award className="w-5 h-5 text-sky-600" />
-                    <span className="text-sm font-medium">{c.name}</span>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          </Shell>
+    {/* Larger skill buttons in a responsive grid */}
+    <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      {SKILLS.map((s) => {
+        const b = BRAND[s.name];
+        return (
+          <button
+            key={s.name}
+            className="flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm md:text-base font-semibold bg-white border shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition"
+            style={{ borderColor: b?.color || '#0ea5e9' }}
+            type="button"
+          >
+            {b?.logo ? (
+              <img src={b.logo} alt={s.name} className="w-5 h-5" />
+            ) : (
+              React.createElement(s.icon, { className: "w-5 h-5" })
+            )}
+            <span className="text-slate-800">{s.name}</span>
+          </button>
+        );
+      })}
+    </div>
+
+    {/* Certifications as big “button cards” */}
+    <h3 className="mt-8 mb-4 text-lg font-semibold">Certifications</h3>
+    <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
+      {CERTS.map((c) => (
+        <button
+          key={c.name}
+          type="button"
+          className="group relative w-full rounded-2xl border px-5 py-4 text-left bg-gradient-to-br from-white to-slate-50 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition ring-1 ring-slate-200 hover:ring-2 hover:ring-sky-400"
+        >
+          {/* small label tag */}
+          <span className="absolute -top-3 left-4 inline-flex items-center gap-1 rounded-full bg-sky-600 text-white text-[10px] px-2 py-0.5 shadow">
+            Certificate
+          </span>
+
+          <div className="flex items-center gap-3">
+            <Award className="w-5 h-5 text-sky-600 group-hover:scale-110 transition-transform" />
+            <span className="font-medium text-slate-800 leading-snug">
+              {c.name}
+            </span>
+          </div>
+        </button>
+      ))}
+    </div>
+  </Card>
+</Shell>
+
 
           {/* WHAT I DO + GIF  */}
           <Shell id="services" title="What I do?">
