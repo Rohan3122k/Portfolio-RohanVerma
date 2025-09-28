@@ -294,6 +294,18 @@ const Card = ({ children, className = "" }) => (
   </div>
 );
 
+// ⭐️ Small helper to render a centered, responsive GIF block
+const GifBox = ({ src, alt, className = "" }) => (
+  <div className="mt-10 flex justify-center">
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      className={`rounded-2xl border shadow-sm max-h-[340px] w-auto ${className}`}
+    />
+  </div>
+);
+
 // Full-bleed section wrapper with consistent inner padding
 const Shell = ({ id, title, children }) => (
   <section id={id} className="min-h-screen snap-start flex flex-col justify-start">
@@ -476,7 +488,6 @@ export default function App() {
             id="home"
             className="relative min-h-screen snap-start flex items-center"
           >
-            {/* Background image */}
             <div
               className="absolute inset-0 -z-10 opacity-25"
               style={{
@@ -486,7 +497,6 @@ export default function App() {
                 backgroundPosition: "center",
               }}
             />
-            {/* Foreground text with padding to match reference */}
             <div className="px-8 md:px-12 lg:px-16 w-full">
               <motion.h2
                 initial={{ opacity: 0, y: 8 }}
@@ -515,7 +525,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* The rest use the full-bleed Shell with consistent inner padding */}
+          {/* ABOUT */}
           <Shell id="about" title="About">
             <div className="grid md:grid-cols-[220px_minmax(0,1fr)] gap-6 items-start">
               <img
@@ -557,6 +567,7 @@ export default function App() {
             </div>
           </Shell>
 
+          {/* SKILLS */}
           <Shell id="skills" title="Skills & Certifications">
             <Card>
               <p className="text-slate-700 mb-4 text-sm">My tech stack includes:</p>
@@ -595,6 +606,7 @@ export default function App() {
             </Card>
           </Shell>
 
+          {/* WHAT I DO + GIF  */}
           <Shell id="services" title="What I do?">
             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
               {SERVICES.map((srv) => (
@@ -604,8 +616,12 @@ export default function App() {
                 </Card>
               ))}
             </div>
+
+            {/* Projects GIF (centered, responsive) */}
+            <GifBox src="/gif-projects.gif" alt="Projects animation" />
           </Shell>
 
+          {/* PROJECTS */}
           <Shell id="projects" title="Projects">
             <div className="space-y-8">
               <div>
@@ -654,6 +670,7 @@ export default function App() {
             </div>
           </Shell>
 
+          {/* RESUME */}
           <Shell id="resume" title="Resume (excerpted)">
             <div className="grid lg:grid-cols-2 gap-6">
               <Card>
@@ -698,6 +715,7 @@ export default function App() {
             </div>
           </Shell>
 
+          {/* RESEARCH + GIF */}
           <Shell id="research" title={PUBLICATION.title}>
             <Card>
               <div className="space-y-4">
@@ -722,8 +740,12 @@ export default function App() {
                 ))}
               </div>
             </Card>
+
+            {/* Research GIF (centered, responsive) */}
+            <GifBox src="/gif-research.gif" alt="Research animation" />
           </Shell>
 
+          {/* CONTACT */}
           <Shell id="contact" title="Contact">
             <div className="grid lg:grid-cols-2 gap-6">
               <Card>
@@ -840,3 +862,4 @@ export default function App() {
     </div>
   );
 }
+
