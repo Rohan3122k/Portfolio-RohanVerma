@@ -192,6 +192,14 @@ const PROJECTS = {
   ],
   dashboards: [
     {
+  title: "Superstore Profit & Discount Optimization Dashboard",
+  tech: ["Tableau", "ETL", "Data Visualization"],
+  blurb:
+    "Analyzed sales and profitability patterns across discount tiers; includes KPIs, scatter plots, and loss-making product insights.",
+  link: "https://public.tableau.com/views/SuperstoreETLProfitDiscountOptimizationDashboard/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link",
+},
+
+    {
       title: "Walmart Superstore DataFlow: End-to-End ETL Project",
       tech: ["PostgreSQL", "Python", "SQLAlchemy", "Power BI"],
       blurb:
@@ -682,7 +690,21 @@ export default function App() {
     <div className="grid md:grid-cols-2 gap-4">
       {PROJECTS.dashboards.map((p) => (
         <Card key={p.title}>
-          <h4 className="font-semibold">{p.title}</h4>
+          <h4 className="font-semibold">
+  {p.link ? (
+    <a
+      href={p.link}
+      target="_blank"
+      rel="noreferrer"
+      className="text-sky-600 hover:underline"
+    >
+      {p.title}
+    </a>
+  ) : (
+    p.title
+  )}
+</h4>
+
           <p className="mt-2 text-sm text-slate-700">{p.blurb}</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {p.tech.map((t) => (
