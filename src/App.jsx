@@ -829,6 +829,23 @@ export default function App() {
             <p className="text-sm text-slate-700">{PROFILE.email}</p>
           </div>
         </div>
+        <div className="flex items-start gap-4">
+  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-50 border">
+    <PieChart className="w-6 h-6 text-sky-600" />
+  </div>
+  <div>
+    <h3 className="font-semibold">Tableau Public</h3>
+    <a
+      href="https://public.tableau.com/app/profile/rohan.verma7748/vizzes"
+      target="_blank"
+      rel="noreferrer"
+      className="text-sm text-sky-600 hover:underline break-all"
+    >
+      public.tableau.com/app/profile/rohan.verma7748/vizzes
+    </a>
+  </div>
+</div>
+
         <div className="rounded-xl overflow-hidden border">
           <iframe
             title="Beacon St Map"
