@@ -447,6 +447,15 @@ export default function App() {
                 >
                   <Mail className="w-5 h-5" />
                 </a>
+                <a
+  href="https://public.tableau.com/app/profile/rohan.verma7748/vizzes"
+  target="_blank"
+  rel="noreferrer"
+  className="p-2 rounded-full bg-slate-800 hover:bg-slate-700"
+>
+  <PieChart className="w-5 h-5" />
+</a>
+
               </div>
 
               <div className="mt-4 flex flex-wrap justify-center gap-2">
