@@ -40,7 +40,7 @@ const PROFILE = {
   avatar: "/profile.jpg",
   tagline:
     "Translating messy datasets into clean insights bosses can nod at.",
-  location: "Beacon St, Boston, MA, USA",
+  location: "Beacon St, Brookline, MA, USA",
   email: "verma.rohan@northeastern.edu",
   socials: {
     github: "https://github.com/Rohan3122k",
@@ -234,7 +234,7 @@ const PUBLICATION = {
   ],
 };
 
-const CONTACT = { address: "Beacon St, Boston, MA, USA" };
+const CONTACT = { address: "Beacon St, Brookline, MA, USA" };
 
 // ---- Helpers ----
 const sections = [
