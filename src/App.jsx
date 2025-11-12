@@ -571,7 +571,7 @@ export default function App() {
           <span className="font-semibold">Availability:</span> Immediate
         </p>
         <p>
-          <span className="font-semibold">Right-to-work:</span> Yes & No sponsorhip required
+          <span className="font-semibold">Right-to-work:</span> Yes & No sponsorship required
         </p>
       </div>
 
