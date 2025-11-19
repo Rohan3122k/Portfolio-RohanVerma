@@ -74,7 +74,7 @@ const SKILLS = [
 ];
 
 const CERTS = [
-  { name: "Microsoft Power BI Data Analyst Associate (PL-300)" },
+  { name: "Google Data Analytics Certificate" },
   { name: "IBM Data Science Certificate" },
   { name: "AWS Certified Cloud Practitioner (In Progress)" },
 ];
