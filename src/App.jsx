@@ -59,6 +59,10 @@ const BRAND = {
   Spark: { color: "#E25A1C", logo: "https://cdn.simpleicons.org/apachespark/white" },
   AWS: { color: "#FF9900", logo: "https://cdn.simpleicons.org/amazonaws/111111" },
   Git: { color: "#F05032", logo: "https://cdn.simpleicons.org/git/white" },
+  GraphQL: { color: "#E10098", logo: "https://cdn.simpleicons.org/graphql/white" },
+  Grafana: { color: "#F46800", logo: "https://cdn.simpleicons.org/grafana/white" },
+  PostgreSQL: { color: "#4169E1", logo: "https://cdn.simpleicons.org/postgresql/white" },
+  "Node-RED": { color: "#8F0000", logo: "https://cdn.simpleicons.org/nodered/white" },
 };
 
 const SKILLS = [
@@ -71,6 +75,10 @@ const SKILLS = [
   { name: "Spark", icon: Sparkles },
   { name: "AWS", icon: Cloud },
   { name: "Git", icon: Settings },
+  { name: "GraphQL", icon: DatabaseIcon },
+  { name: "Grafana", icon: PieChart },
+  { name: "PostgreSQL", icon: DatabaseIcon },
+  { name: "Node-RED", icon: Server },
 ];
 
 const CERTS = [
@@ -120,6 +128,18 @@ const TIMELINE = {
     },
   ],
   work: [
+    {
+  role: "Industrial Data Operations Co-Op",
+  org: "Moderna, Norwood, MA, USA",
+  time: "Jan 2026 – Jul 2026",
+  bullets: [
+    "Designed and deployed scalable ETL/data pipelines and real-time Grafana dashboards for an enterprise alarm monitoring platform supporting five global sites, reducing alarm investigation time by 20%.",
+    "Built ETL pipelines using SQL, GraphQL, REST APIs, JSON, and FlowFuse Node-RED to integrate enterprise data from the ODH (Rhize) warehouse, processing data across 5 global sites and 3-4 upstream systems daily.",
+    "Developed end-to-end data pipelines for alarm lifecycle analytics, improving data validation accuracy by 15% and reducing manual reporting turnaround from hours to minutes.",
+    "Collaborated across engineering teams to troubleshoot PostgreSQL, PCS, MES, DeltaV, and AVEVA PI data issues, reducing recurring data discrepancies by 13%.",
+  ],
+  tools: ["ODH (Rhize)", "DeltaV", "Wonderware (SCADA)", "AVEVA PI System", "MES"],
+},
     {
       role: "Research Assistant",
       org: "Department of EEE, BIT Mesra, India",
