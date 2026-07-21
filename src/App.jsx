@@ -36,7 +36,7 @@ const {
 // ---- Profile & content ----
 const PROFILE = {
   name: "Rohan Verma",
-  titleWords: ["Data Analyst", "Data Engineer", "Data Scientist"],
+  titleWords: ["Data Analyst", "Data Engineer", "Data Scientist, Automation Engineer"],
   avatar: "/profile.jpg",
   tagline:
     "Translating messy datasets into clean insights bosses can nod at.",
@@ -115,7 +115,7 @@ const TIMELINE = {
       org: "Northeastern University",
       time: "2024 – 2026",
       details: [
-        "Relevant courses: DB Management, Data Mining & Visualization, Machine Learning, Economic Decision Making",
+        "Relevant courses: DB Management, Data Mining & Visualization, Machine Learning, Economic Decision Making, Integrated Automation",
       ],
     },
     {
@@ -138,7 +138,6 @@ const TIMELINE = {
     "Developed end-to-end data pipelines for alarm lifecycle analytics, improving data validation accuracy by 15% and reducing manual reporting turnaround from hours to minutes.",
     "Collaborated across engineering teams to troubleshoot PostgreSQL, PCS, MES, DeltaV, and AVEVA PI data issues, reducing recurring data discrepancies by 13%.",
   ],
-  tools: ["ODH (Rhize)", "DeltaV", "Wonderware (SCADA)", "AVEVA PI System", "MES"],
 },
     {
       role: "Research Assistant",
