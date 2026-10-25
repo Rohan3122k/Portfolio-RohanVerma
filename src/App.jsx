@@ -39,7 +39,7 @@ const PROFILE = {
   titleWords: ["Data Analyst", "Data Engineer", "Data Scientist", "Automation Engineer"],
   avatar: "/profile.jpg",
   tagline:
-    "Building reliable data pipelines, intelligent analytics, and automation solutions that turn complex data into measurable impact.",
+    "Translating messy datasets into clean insights bosses can nod at.",
   location: "Greater Boston, MA",
   email: "verma.rohan@northeastern.edu",
   socials: {
@@ -50,19 +50,19 @@ const PROFILE = {
 
 // Brand colors + logos
 const BRAND = {
-  SQL: { color: "#336791", logo: "https://cdn.simpleicons.org/postgresql/white" },
-  Python: { color: "#3776AB", logo: "https://cdn.simpleicons.org/python/white" },
-  dbt: { color: "#FF694B", logo: "https://cdn.simpleicons.org/dbt/white" },
-  Tableau: { color: "#E97627", logo: "https://cdn.simpleicons.org/tableau/white" },
-  "Power BI": { color: "#F2C811", logo: "https://cdn.simpleicons.org/powerbi/111111" },
-  Airflow: { color: "#017CEE", logo: "https://cdn.simpleicons.org/apacheairflow/white" },
-  Spark: { color: "#E25A1C", logo: "https://cdn.simpleicons.org/apachespark/white" },
-  AWS: { color: "#FF9900", logo: "https://cdn.simpleicons.org/amazonaws/111111" },
-  Git: { color: "#F05032", logo: "https://cdn.simpleicons.org/git/white" },
-  GraphQL: { color: "#E10098", logo: "https://cdn.simpleicons.org/graphql/white" },
-  Grafana: { color: "#F46800", logo: "https://cdn.simpleicons.org/grafana/white" },
-  PostgreSQL: { color: "#4169E1", logo: "https://cdn.simpleicons.org/postgresql/white" },
-  "Node-RED": { color: "#8F0000", logo: "https://cdn.simpleicons.org/nodered/white" },
+  SQL: { color: "#336791", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
+  Python: { color: "#3776AB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
+  dbt: { color: "#FF694B" },
+  Tableau: { color: "#E97627" },
+  "Power BI": { color: "#F2C811" },
+  Airflow: { color: "#017CEE" },
+  Spark: { color: "#E25A1C" },
+  AWS: { color: "#FF9900" },
+  Git: { color: "#F05032", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
+  GraphQL: { color: "#E10098", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/graphql/graphql-plain.svg" },
+  Grafana: { color: "#F46800", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/grafana/grafana-original.svg" },
+  PostgreSQL: { color: "#4169E1", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
+  "Node-RED": { color: "#8F0000", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodered/nodered-original.svg" },
 };
 
 const SKILLS = [
@@ -82,11 +82,10 @@ const SKILLS = [
 ];
 
 const CERTS = [
-  { name: "CompTIA Security+" },
-  { name: "ISC2 Certified in Cybersecurity (CC)" },
-  { name: "Google Cybersecurity Professional Certificate" },
-  { name: "IBM Data Science Professional Certificate" },
-  { name: "Databricks Generative AI Fundamentals" },
+  { name: "Google Data Analytics Certificate" },
+  { name: "Harvard Online – Data Science and AI Principles" },
+  { name: "AWS Certified Data Engineer – Associate (In Progress)" },
+  { name: "IBM Data Science Certificate" },
 ];
 
 const SERVICES = [
@@ -657,11 +656,17 @@ export default function App() {
             className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-base text-white shadow-sm"
             style={{ backgroundColor: b?.color || "#0ea5e9" }}
           >
-            {b?.logo ? (
-              <img src={b.logo} alt={s.name} className="w-5 h-5" />
-            ) : (
-              React.createElement(s.icon, { className: "w-5 h-5" })
-            )}
+            <span className="relative inline-flex w-5 h-5 shrink-0 items-center justify-center">
+              {b?.logo && (
+                <img
+                  src={b.logo}
+                  alt=""
+                  className="absolute inset-0 w-5 h-5 object-contain"
+                  onError={(e) => { e.currentTarget.style.display = "none"; }}
+                />
+              )}
+              {React.createElement(s.icon, { className: "w-5 h-5" })}
+            </span>
             {s.name}
           </button>
         );
@@ -868,7 +873,7 @@ export default function App() {
 
           {/* CONTACT */}
 <Shell id="contact" title="Contact">
-  <div className="grid lg:grid-cols-2 gap-6">
+  <div className="max-w-3xl">
     {/* Contact Info */}
     <Card>
       <div className="grid grid-cols-1 gap-6">
@@ -921,65 +926,6 @@ export default function App() {
       </div>
     </Card>
 
-    {/* Contact Form */}
-    <Card>
-      <h3 className="font-semibold mb-3">Leave a message</h3>
-      <form
-        onSubmit={async (e) => {
-          e.preventDefault();
-          const data = new FormData(e.currentTarget);
-          const name = data.get("name");
-          const email = data.get("email");
-          const message = data.get("message");
-
-          try {
-            const res = await fetch("/api/send-email", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ name, email, message }),
-            });
-
-            if (res.ok) {
-              alert(" Your message has been sent!");
-              e.currentTarget.reset();
-            } else {
-              alert(" Failed to send message. Try again.");
-            }
-          } catch (err) {
-            alert(" Error: " + err.message);
-          }
-        }}
-        className="space-y-3"
-      >
-        <input
-          name="name"
-          required
-          placeholder="Your Name"
-          className="w-full rounded-xl border px-3 py-2"
-        />
-        <input
-          name="email"
-          required
-          type="email"
-          placeholder="Email"
-          className="w-full rounded-xl border px-3 py-2"
-        />
-        <textarea
-          name="message"
-          required
-          rows={5}
-          placeholder="Message"
-          className="w-full rounded-xl border px-3 py-2"
-        />
-        <button
-          type="submit"
-          className="rounded-2xl bg-sky-500 text-white px-4 py-2 font-medium hover:bg-sky-600"
-        >
-          Submit
-        </button>
-      </form>
-      {/* Developer tests intentionally hidden from the public portfolio. */}
-    </Card>
   </div>
 </Shell>
 
