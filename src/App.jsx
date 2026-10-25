@@ -31,6 +31,7 @@ const {
   Server,
   Sparkles,
   BookOpen,
+  Sun, Moon, Menu, X, Download, ExternalLink, ChevronDown,
 } = Icons;
 
 // ---- Profile & content ----
@@ -353,6 +354,60 @@ const Card = ({ children, className = "" }) => (
   </div>
 );
 
+// Click-to-expand project cards. Existing titles, descriptions and URLs are preserved.
+function ProjectCard({ project: p }) {
+  const [expanded, setExpanded] = useState(false);
+  return (
+    <motion.article layout whileHover={{ y: -4 }} transition={{ duration: 0.2 }}
+      className="rounded-2xl border bg-white p-5 shadow-sm hover:shadow-lg transition-shadow">
+      <h4 className="font-semibold">{p.title}</h4>
+      <p className="mt-2 text-sm text-slate-700">{p.blurb}</p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {p.tech.map(t => <span key={t} className="text-xs border rounded-full px-2 py-1 bg-slate-50">{t}</span>)}
+      </div>
+      <button type="button" aria-expanded={expanded} onClick={() => setExpanded(v => !v)}
+        className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-sky-600 hover:underline">
+        {expanded ? "Hide details" : "Explore project"}<ChevronDown className={`w-4 h-4 transition-transform ${expanded ? "rotate-180" : ""}`} />
+      </button>
+      {expanded && <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }}
+        className="mt-3 border-t pt-3 text-sm text-slate-600">
+        <p><strong>Technology:</strong> {p.tech.join(" · ")}</p>
+        <p className="mt-2">{p.blurb}</p>
+        {p.link && <a className="mt-3 inline-flex items-center gap-1 font-semibold text-sky-600 hover:underline"
+          href={p.link} target="_blank" rel="noopener noreferrer">View live dashboard <ExternalLink className="w-4 h-4" /></a>}
+      </motion.div>}
+    </motion.article>
+  );
+}
+
+function ImpactCounter({ value, label, suffix = "", prefix = "" }) {
+  const [visible, setVisible] = useState(false);
+  const [count, setCount] = useState(0);
+  const ref = React.useRef(null);
+  useEffect(() => {
+    if (!ref.current) return;
+    const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) setVisible(true); }, { threshold: 0.2 });
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+  useEffect(() => {
+    if (!visible) return;
+    let frame;
+    const start = performance.now();
+    const animate = now => {
+      const t = Math.min((now - start) / 1100, 1);
+      setCount(Math.round(value * (1 - Math.pow(1 - t, 3))));
+      if (t < 1) frame = requestAnimationFrame(animate);
+    };
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, [visible, value]);
+  return <div ref={ref} className="rounded-2xl border bg-white p-5 text-center shadow-sm">
+    <div className="text-3xl font-extrabold text-sky-600 tabular-nums">{prefix}{count}{suffix}</div>
+    <p className="mt-2 text-sm text-slate-600">{label}</p>
+  </div>;
+}
+
 // ⭐️ Small helper to render a centered, responsive GIF block
 const GifBox = ({ src, alt, className = "" }) => (
   <div className="mt-10 flex justify-center">
@@ -368,7 +423,7 @@ const GifBox = ({ src, alt, className = "" }) => (
 // Full-bleed section wrapper with consistent inner padding
 const Shell = ({ id, title, children }) => (
   <section id={id} className="min-h-screen snap-start flex flex-col justify-start">
-    <div className="px-8 md:px-12 lg:px-16 py-16 w-full">
+    <div className="px-5 sm:px-8 md:px-12 lg:px-16 py-12 md:py-16 w-full">
       <motion.h2
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -439,6 +494,9 @@ const DevTests = () => {
 export default function App() {
   const typed = useTypewriter(PROFILE.titleWords);
   const [activeTab, setActiveTab] = useState("analytics");
+  const [darkMode, setDarkMode] = useState(() => typeof window !== "undefined" && window.localStorage.getItem("portfolioTheme") === "dark");
+  const [mobileMenu, setMobileMenu] = useState(false);
+  useEffect(() => { window.localStorage.setItem("portfolioTheme", darkMode ? "dark" : "light"); }, [darkMode]);
   const active = useScrollSpy(sections.map((s) => s.id));
 
   // Smooth page scroll + fullpage snap
@@ -446,7 +504,7 @@ export default function App() {
     const html = document.documentElement;
     html.style.scrollBehavior = "smooth";
     html.classList.add("scroll-smooth");
-    document.body.classList.add("snap-y", "snap-mandatory");
+    if (window.innerWidth >= 768) document.body.classList.add("snap-y", "snap-mandatory");
     return () => {
       html.style.scrollBehavior = "auto";
       document.body.classList.remove("snap-y", "snap-mandatory");
@@ -460,11 +518,30 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800">
+    <div className={`portfolio-root min-h-screen bg-slate-50 text-slate-800 ${darkMode ? "portfolio-dark" : ""}`}>
+      <style>{`
+        .portfolio-dark { background:#0b1220; color:#e2e8f0; }
+        .portfolio-dark .bg-white { background-color:#172338!important; }
+        .portfolio-dark .bg-slate-50 { background-color:#0b1220!important; }
+        .portfolio-dark .text-slate-900, .portfolio-dark .text-slate-800, .portfolio-dark .text-slate-700 { color:#e2e8f0!important; }
+        .portfolio-dark .text-slate-600, .portfolio-dark .text-slate-500 { color:#a9b8ce!important; }
+        .portfolio-dark .border, .portfolio-dark .border-b, .portfolio-dark .border-t { border-color:#334155!important; }
+        .portfolio-dark input, .portfolio-dark textarea { background-color:#172338; color:#e2e8f0; }
+        .portfolio-root section { scroll-margin-top: 3.5rem; }
+        @media (max-width: 767px) { .portfolio-root .snap-start { scroll-snap-align: none; } }
+        @media (prefers-reduced-motion: reduce) { .portfolio-root *, .portfolio-root *::before, .portfolio-root *::after { animation-duration:0.01ms!important; transition-duration:0.01ms!important; scroll-behavior:auto!important; } }
+      `}</style>
+      <div className="md:hidden sticky top-0 z-50 flex justify-between items-center bg-slate-900 text-white px-4 py-3 shadow-lg">
+        <strong>{PROFILE.name}</strong>
+        <div className="flex items-center gap-3">
+          <button aria-label="Toggle dark mode" onClick={() => setDarkMode(v => !v)}>{darkMode ? <Sun size={20}/> : <Moon size={20}/>}</button>
+          <button aria-label="Toggle menu" aria-expanded={mobileMenu} onClick={() => setMobileMenu(v => !v)}>{mobileMenu ? <X size={22}/> : <Menu size={22}/>}</button>
+        </div>
+      </div>
       {/* FULL-BLEED GRID: sidebar + content (no max-width wrapper) */}
-      <div className="w-full grid grid-cols-[300px_minmax(0,1fr)] gap-0">
+      <div className="w-full grid grid-cols-1 md:grid-cols-[260px_minmax(0,1fr)] lg:grid-cols-[300px_minmax(0,1fr)] gap-0">
         {/* Sidebar */}
-        <aside className="h-screen sticky top-0 self-start">
+        <aside className={`${mobileMenu ? "block" : "hidden"} md:block md:h-screen md:sticky md:top-0 md:self-start`}>
           <div className="h-full rounded-none bg-slate-900 text-white px-6 py-6 overflow-auto">
             <div className="flex flex-col items-center text-center">
               <img
@@ -522,7 +599,7 @@ export default function App() {
                     <li key={s.id}>
                       <a
                         href={`#${s.id}`}
-                        onClick={(e) => handleNav(e, s.id)}
+                        onClick={(e) => { handleNav(e, s.id); setMobileMenu(false); }}
                         className={`flex items-center justify-between rounded-xl px-3 py-2 text-sm transition-colors ${
                           active === s.id
                             ? "bg-sky-500 text-white"
@@ -537,6 +614,11 @@ export default function App() {
                 </ul>
               </nav>
 
+              <button type="button" onClick={() => setDarkMode(v => !v)}
+                className="hidden md:inline-flex mt-5 items-center gap-2 rounded-xl border border-slate-600 px-4 py-2 text-sm hover:bg-slate-800">
+                {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                {darkMode ? "Light mode" : "Dark mode"}
+              </button>
               <a
                 href="#resume"
                 onClick={(e) => handleNav(e, "resume")}
@@ -564,12 +646,12 @@ export default function App() {
                 backgroundPosition: "center",
               }}
             />
-            <div className="px-8 md:px-12 lg:px-16 w-full">
+            <div className="px-5 sm:px-8 md:px-12 lg:px-16 w-full">
               <motion.h2
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="text-5xl md:text-6xl font-extrabold text-slate-900"
+                className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900"
               >
                 {PROFILE.name}
               </motion.h2>
@@ -589,12 +671,25 @@ export default function App() {
               >
                 {PROFILE.tagline}
               </motion.p>
+              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="mt-8 flex flex-wrap gap-3">
+                <a href="#projects" onClick={e => handleNav(e, "projects")} className="rounded-xl bg-sky-500 px-5 py-3 font-semibold text-white hover:bg-sky-600 transition hover:-translate-y-1">Explore Projects</a>
+                <a href="/resume.pdf" download="Rohan_Verma_Resume.pdf" className="inline-flex items-center gap-2 rounded-xl border border-sky-500 px-5 py-3 font-semibold text-sky-600 hover:bg-sky-50 transition hover:-translate-y-1"><Download className="w-4 h-4"/> Download Resume</a>
+              </motion.div>
             </div>
           </section>
 
+       {/* Measurable achievements from Moderna */}
+       <section aria-label="Professional impact" className="px-8 md:px-12 lg:px-16 py-12 snap-start">
+         <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-2xl font-bold mb-6">Professional Impact</motion.h2>
+         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+           <ImpactCounter value={5} label="Manufacturing sites supported" />
+           <ImpactCounter value={20} suffix="%" label="Faster alarm investigations" />
+           <ImpactCounter value={500} prefix="$" suffix="K" label="Approximate cost avoidance" />
+         </div>
+       </section>
        {/* ABOUT */}
 <Shell id="about" title="About">
-  <div className="grid md:grid-cols-[280px_minmax(0,1fr)] gap-8 items-start">
+  <div className="grid grid-cols-1 xl:grid-cols-[280px_minmax(0,1fr)] gap-8 items-start">
     {/* Profile Image */}
     <img
       src={PROFILE.avatar}
@@ -645,7 +740,7 @@ export default function App() {
   <Card>
     <p className="text-slate-700 mb-4 text-sm">My tech stack includes:</p>
 
-    {/* Same pills, just bigger */}
+    {/* Same brand-colored pills with reliable inline SVG icons */}
     <div className="flex flex-wrap gap-4">
       {SKILLS.map((s) => {
         const b = BRAND[s.name];
@@ -653,18 +748,10 @@ export default function App() {
           <button
             key={s.name}
             type="button"
-            className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-base text-white shadow-sm"
+            className="group inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-base text-white shadow-sm transition duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500" title={`${s.name} — part of my technology stack`}
             style={{ backgroundColor: b?.color || "#0ea5e9" }}
           >
-            <span className="relative inline-flex w-5 h-5 shrink-0 items-center justify-center">
-              {b?.logo && (
-                <img
-                  src={b.logo}
-                  alt=""
-                  className="absolute inset-0 w-5 h-5 object-contain"
-                  onError={(e) => { e.currentTarget.style.display = "none"; }}
-                />
-              )}
+            <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center transition-transform duration-300 group-hover:scale-125" aria-hidden="true">
               {React.createElement(s.icon, { className: "w-5 h-5" })}
             </span>
             {s.name}
@@ -734,68 +821,23 @@ export default function App() {
     </button>
   </div>
 
-  {/* Projects Grid */}
-  {activeTab === "analytics" && (
-    <div className="grid md:grid-cols-2 gap-4">
-      {PROJECTS.analytics.map((p) => (
-        <Card key={p.title}>
-          <h4 className="font-semibold">{p.title}</h4>
-          <p className="mt-2 text-sm text-slate-700">{p.blurb}</p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {p.tech.map((t) => (
-              <span key={t} className="text-xs border rounded-full px-2 py-1 bg-slate-50">
-                {t}
-              </span>
-            ))}
-          </div>
-        </Card>
-      ))}
-    </div>
-  )}
-
-  {activeTab === "dashboards" && (
-    <div className="grid md:grid-cols-2 gap-4">
-      {PROJECTS.dashboards.map((p) => (
-        <Card key={p.title}>
-          <h4 className="font-semibold">
-  {p.link ? (
-    <a
-      href={p.link}
-      target="_blank"
-      rel="noreferrer"
-      className="text-sky-600 hover:underline"
-    >
-      {p.title}
-    </a>
-  ) : (
-    p.title
-  )}
-</h4>
-
-          <p className="mt-2 text-sm text-slate-700">{p.blurb}</p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {p.tech.map((t) => (
-              <span key={t} className="text-xs border rounded-full px-2 py-1 bg-slate-50">
-                {t}
-              </span>
-            ))}
-          </div>
-        </Card>
-      ))}
-    </div>
-  )}
+  {/* Interactive project cards — no fabricated links */}
+  <div className="grid md:grid-cols-2 gap-4">
+    {PROJECTS[activeTab].map(p => <ProjectCard key={p.title} project={p} />)}
+  </div>
 </Shell>
 
 
 
           {/* RESUME */}
           <Shell id="resume" title="Resume (excerpted)">
+            <p className="mb-5 text-sm text-slate-600">Download the full version: <a href="/resume.pdf" download="Rohan_Verma_Resume.pdf" className="inline-flex items-center gap-1 text-sky-600 font-semibold hover:underline"><Download className="w-4 h-4"/> Download Resume (PDF)</a></p>
             <div className="grid lg:grid-cols-2 gap-6">
               <Card>
                 <h3 className="text-xl font-semibold mb-4">Education</h3>
                 <div className="space-y-6">
                   {TIMELINE.education.map((e) => (
-                    <div key={e.degree} className="relative pl-6">
+                    <motion.div key={e.degree} initial={{ opacity: 0, x: -15 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.4 }} className="relative pl-6 border-l-2 border-sky-200">
                       <div className="flex items-start gap-3">
                         <OrganizationLogo src={e.logo} initials={e.initials} name={e.org} />
                         <div>
@@ -809,18 +851,16 @@ export default function App() {
                           <li key={d}>{d}</li>
                         ))}
                       </ul>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </Card>
 
               <Card>
-                <h3 className="text-xl font-semibold mb-4">
-                  Professional Experience
-                </h3>
+                <h3 className="text-xl font-semibold mb-4">Professional Experience</h3>
                 <div className="space-y-6">
                   {TIMELINE.work.map((w) => (
-                    <div key={w.role} className="relative pl-6">
+                    <motion.div key={w.role} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.4 }} className="relative pl-6 border-l-2 border-sky-200">
                       <div className="flex items-start gap-3">
                         <OrganizationLogo src={w.logo} initials={w.initials} name={w.org} />
                         <div>
@@ -834,7 +874,7 @@ export default function App() {
                           <li key={b}>{b}</li>
                         ))}
                       </ul>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </Card>
