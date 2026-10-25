@@ -31,7 +31,7 @@ const {
   Server,
   Sparkles,
   BookOpen,
-  Sun, Moon, Menu, X, Download, ExternalLink, ChevronDown,
+  Sun, Moon, Menu, X, ExternalLink, ChevronDown,
 } = Icons;
 
 // ---- Profile & content ----
@@ -671,10 +671,6 @@ export default function App() {
               >
                 {PROFILE.tagline}
               </motion.p>
-              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="mt-8 flex flex-wrap gap-3">
-                <a href="#projects" onClick={e => handleNav(e, "projects")} className="rounded-xl bg-sky-500 px-5 py-3 font-semibold text-white hover:bg-sky-600 transition hover:-translate-y-1">Explore Projects</a>
-                <a href="/resume.pdf" download="Rohan_Verma_Resume.pdf" className="inline-flex items-center gap-2 rounded-xl border border-sky-500 px-5 py-3 font-semibold text-sky-600 hover:bg-sky-50 transition hover:-translate-y-1"><Download className="w-4 h-4"/> Download Resume</a>
-              </motion.div>
             </div>
           </section>
 
@@ -723,11 +719,7 @@ export default function App() {
 
       {/* Summary */}
       <p className="mt-6 text-slate-700 text-sm leading-relaxed">
-        I am a Data Analytics Engineering graduate student at Northeastern University
-        with experience at Moderna building industrial data pipelines, automated
-        monitoring systems, and analytics applications. I work with Python, SQL,
-        GraphQL, REST APIs, machine learning, and data visualization to turn
-        complex operational data into reliable, actionable insights.
+        I’m an electrical engineer turned data engineer, finishing an M.S. in Data Analytics Engineering at Northeastern University. At Moderna, I built ETL pipelines moving enterprise warehouse data into AWS Redshift across global manufacturing sites, automated their scheduling with Linux shell scripting, and shipped Grafana dashboards for monitoring. I work with Python, SQL, GraphQL, and REST APIs, plus dbt, Snowflake, and Azure Data Factory. I also have hands-on exposure to industrial systems like MES, DeltaV, and AVEVA PI. My electrical engineering background and IEEE-published research on blockchain and smart grid resilience mean I understand where operational data comes from, not just how to move it.
       </p>
     </div>
   </div>
@@ -831,7 +823,6 @@ export default function App() {
 
           {/* RESUME */}
           <Shell id="resume" title="Resume (excerpted)">
-            <p className="mb-5 text-sm text-slate-600">Download the full version: <a href="/resume.pdf" download="Rohan_Verma_Resume.pdf" className="inline-flex items-center gap-1 text-sky-600 font-semibold hover:underline"><Download className="w-4 h-4"/> Download Resume (PDF)</a></p>
             <div className="grid lg:grid-cols-2 gap-6">
               <Card>
                 <h3 className="text-xl font-semibold mb-4">Education</h3>
