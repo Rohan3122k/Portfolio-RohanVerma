@@ -36,7 +36,7 @@ const {
 // ---- Profile & content ----
 const PROFILE = {
   name: "Rohan Verma",
-  titleWords: ["Data Analyst", "Data Engineer", "Data Scientist, Automation Engineer"],
+  titleWords: ["Data Analyst", "Data Engineer", "Data Scientist", "Automation Engineer"],
   avatar: "/profile.jpg",
   tagline:
     "Translating messy datasets into clean insights bosses can nod at.",
