@@ -674,13 +674,27 @@ export default function App() {
             </div>
           </section>
 
-       {/* Measurable achievements from Moderna */}
-       <section aria-label="Professional impact" className="px-8 md:px-12 lg:px-16 py-12 snap-start">
-         <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-2xl font-bold mb-6">Professional Impact</motion.h2>
+       {/* Highlights: research, experience, and engineering work */}
+       <section aria-label="Highlights" className="px-8 md:px-12 lg:px-16 py-12 snap-start">
+         <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-2xl font-bold mb-6">Highlights</motion.h2>
          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-           <ImpactCounter value={5} label="Manufacturing sites supported" />
-           <ImpactCounter value={20} suffix="%" label="Faster alarm investigations" />
-           <ImpactCounter value={500} prefix="$" suffix="K" label="Approximate cost avoidance" />
+           {[
+             { value: "IEEE", label: "Published research on smart grid resilience" },
+             { value: "3", label: "Industry data roles across pharma, energy, and media" },
+             { value: "ETL → Cloud", label: "Pipelines built for global manufacturing data" },
+           ].map((item, index) => (
+             <motion.div
+               key={item.value}
+               initial={{ opacity: 0, y: 18 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true, amount: 0.25 }}
+               transition={{ duration: 0.45, delay: index * 0.1 }}
+               className="rounded-2xl border bg-white p-5 text-center shadow-sm"
+             >
+               <div className="text-2xl sm:text-3xl font-extrabold text-sky-600">{item.value}</div>
+               <p className="mt-2 text-sm text-slate-600">{item.label}</p>
+             </motion.div>
+           ))}
          </div>
        </section>
        {/* ABOUT */}
@@ -718,9 +732,10 @@ export default function App() {
       </div>
 
       {/* Summary */}
-      <p className="mt-6 text-slate-700 text-sm leading-relaxed">
-        I’m an electrical engineer turned data engineer, finishing an M.S. in Data Analytics Engineering at Northeastern University. At Moderna, I built ETL pipelines moving enterprise warehouse data into AWS Redshift across global manufacturing sites, automated their scheduling with Linux shell scripting, and shipped Grafana dashboards for monitoring. I work with Python, SQL, GraphQL, and REST APIs, plus dbt, Snowflake, and Azure Data Factory. I also have hands-on exposure to industrial systems like MES, DeltaV, and AVEVA PI. My electrical engineering background and IEEE-published research on blockchain and smart grid resilience mean I understand where operational data comes from, not just how to move it.
-      </p>
+      <div className="mt-6 space-y-4 text-slate-700 text-sm leading-relaxed">
+        <p>I grew up in Jaipur, India, and chose science early on, which led me to study Electrical Engineering at BIT Mesra. Working with power systems got me curious about the data behind them, and that curiosity turned into a research paper on blockchain and smart grid resilience, published by IEEE. That paper was my pivot from circuits to data.</p>
+        <p>I’m now finishing my MS in Data Analytics Engineering at Northeastern University in Boston. During my co-op at Moderna, I built data pipelines across global manufacturing sites, automated their scheduling, and deployed monitoring dashboards. Alongside Python, SQL, GraphQL, and REST APIs, I’ve learned that reliable data comes from understanding the systems that produce it. I’m looking for data engineering, analytics, and ML roles starting January 2027.</p>
+      </div>
     </div>
   </div>
 </Shell>
