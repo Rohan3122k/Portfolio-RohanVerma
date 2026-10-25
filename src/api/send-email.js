@@ -1,37 +1,99 @@
-// /api/send-email.js  (ESM)
-import { Resend } from 'resend';
+
+import { Resend } from "resend";
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return res.status(405).json({ ok: false, error: 'Method not allowed' });
+  if (req.method !== "POST") {
+    res.setHeader("Allow", "POST");
+    return res.status(405).json({
+      ok: false,
+      error: "Method not allowed",
+    });
   }
 
-  // Handle both parsed and raw bodies
   let body = req.body;
-  if (typeof body === 'string') {
-    try { body = JSON.parse(body); } catch {}
+
+  if (typeof body === "string") {
+    try {
+      body = JSON.parse(body);
+    } catch {
+      return res.status(400).json({
+        ok: false,
+        error: "Invalid JSON",
+      });
+    }
   }
 
   const { name, email, message } = body || {};
-  if (!name || !email || !message) {
-    return res.status(400).json({ ok: false, error: 'Missing fields' });
+
+  if (
+    typeof name !== "string" ||
+    typeof email !== "string" ||
+    typeof message !== "string" ||
+    !name.trim() ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
+    !message.trim() ||
+    name.length > 100 ||
+    email.length > 254 ||
+    message.length > 5000
+  ) {
+    return res.status(400).json({
+      ok: false,
+      error: "Please enter valid contact details.",
+    });
+  }
+
+  if (!process.env.RESEND_API_KEY) {
+    console.error("RESEND_API_KEY is missing");
+
+    return res.status(500).json({
+      ok: false,
+      error: "Email service is not configured.",
+    });
   }
 
   try {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    await resend.emails.send({
-      from: 'Rohan <onboarding@resend.dev>', // sandbox sender
-      to: 'verma.rohan@northeastern.edu',    // your inbox
-      reply_to: email,
-      subject: `Portfolio contact from ${name}`,
-      text: `${message}\n\nReply to: ${email}`,
+    const { data, error } = await resend.emails.send({
+      from: process.env.CONTACT_FROM_EMAIL ||
+        "Rohan Portfolio <onboarding@resend.dev>",
+
+      to: ["verma.rohan@northeastern.edu"],
+
+      replyTo: email.trim(),
+
+      subject: `Portfolio Contact from ${name.trim()}`,
+
+      text: `
+Name: ${name.trim()}
+Email: ${email.trim()}
+
+Message:
+${message.trim()}
+      `,
     });
 
-    return res.status(200).json({ ok: true });
+    if (error) {
+      console.error("Resend error:", error);
+
+      return res.status(502).json({
+        ok: false,
+        error: "Email delivery failed. Please try again.",
+      });
+    }
+
+    return res.status(200).json({
+      ok: true,
+      message: "Message sent successfully!",
+      id: data?.id,
+    });
+
   } catch (err) {
-    console.error('Resend error:', err);
-    return res.status(500).json({ ok: false, error: 'Email failed' });
+    console.error("Server error:", err);
+
+    return res.status(500).json({
+      ok: false,
+      error: "Something went wrong.",
+    });
   }
 }
