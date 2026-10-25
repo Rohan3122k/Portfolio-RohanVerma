@@ -603,29 +603,6 @@ export default function App() {
             </div>
           </section>
 
-       {/* Highlights: research, experience, and engineering work */}
-       <section id="highlights" aria-label="Highlights" className="px-8 md:px-12 lg:px-16 py-12 snap-start">
-         <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-2xl font-bold mb-6">Highlights</motion.h2>
-         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-           {[
-             { value: "IEEE", label: "Published research on smart grid resilience" },
-             { value: "3", label: "Industry data roles across pharma, energy, and media" },
-             { value: "ETL → Cloud", label: "Pipelines built for global manufacturing data" },
-           ].map((item, index) => (
-             <motion.div
-               key={item.value}
-               initial={{ opacity: 0, y: 18 }}
-               whileInView={{ opacity: 1, y: 0 }}
-               viewport={{ once: true, amount: 0.25 }}
-               transition={{ duration: 0.45, delay: index * 0.1 }}
-               className="rounded-2xl border bg-white p-5 text-center shadow-sm"
-             >
-               <div className="text-2xl sm:text-3xl font-extrabold text-sky-600">{item.value}</div>
-               <p className="mt-2 text-sm text-slate-600">{item.label}</p>
-             </motion.div>
-           ))}
-         </div>
-       </section>
        {/* ABOUT */}
 <Shell id="about" title="About">
   <div className="grid grid-cols-1 xl:grid-cols-[280px_minmax(0,1fr)] gap-8 items-start">
@@ -669,7 +646,29 @@ export default function App() {
   </div>
 </Shell>
 
-
+       {/* Highlights: research, experience, and engineering work */}
+       <section id="highlights" aria-label="Highlights" className="px-8 md:px-12 lg:px-16 py-12 snap-start">
+         <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-2xl font-bold mb-6">Highlights</motion.h2>
+         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+           {[
+             { value: "IEEE", label: "Published research on smart grid resilience" },
+             { value: "3", label: "Industry data roles across pharma, energy, and media" },
+             { value: "ETL → Cloud", label: "Pipelines built for global manufacturing data" },
+           ].map((item, index) => (
+             <motion.div
+               key={item.value}
+               initial={{ opacity: 0, y: 18 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true, amount: 0.25 }}
+               transition={{ duration: 0.45, delay: index * 0.1 }}
+               className="rounded-2xl border bg-white p-5 text-center shadow-sm"
+             >
+               <div className="text-2xl sm:text-3xl font-extrabold text-sky-600">{item.value}</div>
+               <p className="mt-2 text-sm text-slate-600">{item.label}</p>
+             </motion.div>
+           ))}
+         </div>
+       </section>
 
         {/* SKILLS (original look, larger size) */}
 <Shell id="skills" title="Skills & Certifications">
