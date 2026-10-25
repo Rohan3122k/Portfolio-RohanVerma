@@ -292,6 +292,7 @@ const CONTACT = { address: "Greater Boston, MA" };
 const sections = [
   { id: "home", label: "Home" },
   { id: "about", label: "About" },
+  { id: "highlights", label: "Highlights" },
   { id: "skills", label: "Skills & Certifications" },
   { id: "services", label: "Expertise" },
   { id: "projects", label: "Projects" },
@@ -380,34 +381,6 @@ function ProjectCard({ project: p }) {
   );
 }
 
-function ImpactCounter({ value, label, suffix = "", prefix = "" }) {
-  const [visible, setVisible] = useState(false);
-  const [count, setCount] = useState(0);
-  const ref = React.useRef(null);
-  useEffect(() => {
-    if (!ref.current) return;
-    const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) setVisible(true); }, { threshold: 0.2 });
-    observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-  useEffect(() => {
-    if (!visible) return;
-    let frame;
-    const start = performance.now();
-    const animate = now => {
-      const t = Math.min((now - start) / 1100, 1);
-      setCount(Math.round(value * (1 - Math.pow(1 - t, 3))));
-      if (t < 1) frame = requestAnimationFrame(animate);
-    };
-    frame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(frame);
-  }, [visible, value]);
-  return <div ref={ref} className="rounded-2xl border bg-white p-5 text-center shadow-sm">
-    <div className="text-3xl font-extrabold text-sky-600 tabular-nums">{prefix}{count}{suffix}</div>
-    <p className="mt-2 text-sm text-slate-600">{label}</p>
-  </div>;
-}
-
 // ⭐️ Small helper to render a centered, responsive GIF block
 const GifBox = ({ src, alt, className = "" }) => (
   <div className="mt-10 flex justify-center">
@@ -439,57 +412,6 @@ const Shell = ({ id, title, children }) => (
   </section>
 );
 
-// ---- Dev tests ----
-function runDevTests() {
-  const out = [];
-  const ok = (n) => out.push({ n, pass: true });
-  const bad = (n, d) => out.push({ n, pass: false, d });
-
-  try {
-    if (!Array.isArray(SKILLS) || SKILLS.length === 0) throw new Error("empty");
-    const badIcon = SKILLS.find((s) => typeof s.icon !== "function");
-    if (badIcon) throw new Error(`icon not component: ${badIcon.name}`);
-    ok("SKILLS icons");
-  } catch (e) {
-    bad("SKILLS icons", String(e.message || e));
-  }
-
-  try {
-    if (!/@/.test(PROFILE.email) || !/\./.test(PROFILE.email))
-      throw new Error("format");
-    ok("Email format");
-  } catch (e) {
-    bad("Email format", String(e.message || e));
-  }
-
-  try {
-    if (!PROJECTS.analytics?.length || !PROJECTS.dashboards?.length)
-      throw new Error("missing");
-    ok("Projects populated");
-  } catch (e) {
-    bad("Projects populated", String(e.message || e));
-  }
-
-  return out;
-}
-
-const DevTests = () => {
-  const [r, setR] = useState([]);
-  useEffect(() => setR(runDevTests()), []);
-  return (
-    <details className="mt-6 text-xs text-slate-500">
-      <summary>Developer Tests</summary>
-      <ul className="mt-2 list-disc pl-5">
-        {r.map((x) => (
-          <li key={x.n} className={x.pass ? "text-green-700" : "text-red-700"}>
-            {x.pass ? "✔" : "✖"} {x.n} {x.d ? `— ${x.d}` : ""}
-          </li>
-        ))}
-      </ul>
-    </details>
-  );
-};
-
 // ---- App ----
 export default function App() {
   const typed = useTypewriter(PROFILE.titleWords);
@@ -504,10 +426,10 @@ export default function App() {
     const html = document.documentElement;
     html.style.scrollBehavior = "smooth";
     html.classList.add("scroll-smooth");
-    if (window.innerWidth >= 768) document.body.classList.add("snap-y", "snap-mandatory");
+    if (window.innerWidth >= 768) document.body.classList.add("snap-y", "snap-proximity");
     return () => {
       html.style.scrollBehavior = "auto";
-      document.body.classList.remove("snap-y", "snap-mandatory");
+      document.body.classList.remove("snap-y", "snap-proximity");
     };
   }, []);
 
@@ -675,7 +597,7 @@ export default function App() {
           </section>
 
        {/* Highlights: research, experience, and engineering work */}
-       <section aria-label="Highlights" className="px-8 md:px-12 lg:px-16 py-12 snap-start">
+       <section id="highlights" aria-label="Highlights" className="px-8 md:px-12 lg:px-16 py-12 snap-start">
          <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-2xl font-bold mb-6">Highlights</motion.h2>
          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
            {[
@@ -914,7 +836,7 @@ export default function App() {
             </Card>
 
             {/* Research GIF (centered, responsive) */}
-            <GifBox src="/gif-data.jpg" alt="Research animation" />
+            <GifBox src="/gif-data.jpg" alt="Research and data visualization illustration" />
           </Shell>
 
           {/* CONTACT */}
