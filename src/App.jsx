@@ -590,7 +590,7 @@ export default function App() {
           <span className="font-semibold">Availability:</span> Immediate
         </p>
         <p>
-          <span className="font-semibold">Right-to-work:</span> Yes & No sponsorship required
+          <span className="font-semibold">Right-to-work:</span> F-1 OPT | STEM OPT Eligible | Future Sponsorship Required
         </p>
       </div>
 
