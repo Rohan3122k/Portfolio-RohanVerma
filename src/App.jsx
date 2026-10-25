@@ -478,34 +478,41 @@ export default function App() {
                 <a
                   href={PROFILE.socials.github}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  title="GitHub"
                   className="p-2 rounded-full bg-slate-800 hover:bg-slate-700"
                 >
-                  <Github className="w-5 h-5" />
+                  <Github className="w-5 h-5" aria-hidden="true" />
                 </a>
                 <a
                   href={PROFILE.socials.linkedin}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  title="LinkedIn"
                   className="p-2 rounded-full bg-slate-800 hover:bg-slate-700"
                 >
-                  <Linkedin className="w-5 h-5" />
+                  <Linkedin className="w-5 h-5" aria-hidden="true" />
                 </a>
                 <a
                   href={`mailto:${PROFILE.email}`}
+                  aria-label="Email"
+                  title="Email"
                   className="p-2 rounded-full bg-slate-800 hover:bg-slate-700"
                 >
-                  <Mail className="w-5 h-5" />
+                  <Mail className="w-5 h-5" aria-hidden="true" />
                 </a>
                 <a
-  href="https://public.tableau.com/app/profile/rohan.verma7748/vizzes"
-  target="_blank"
-  rel="noreferrer"
-  className="p-2 rounded-full bg-slate-800 hover:bg-slate-700"
->
-  <PieChart className="w-5 h-5" />
-</a>
-
+                  href="https://public.tableau.com/app/profile/rohan.verma7748/vizzes"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Tableau Public"
+                  title="Tableau Public"
+                  className="p-2 rounded-full bg-slate-800 hover:bg-slate-700"
+                >
+                  <PieChart className="w-5 h-5" aria-hidden="true" />
+                </a>
               </div>
 
               <div className="mt-4 flex flex-wrap justify-center gap-2">
